@@ -67,18 +67,16 @@ var subnetName= 'snet-${applicationName}-${regionName}-${environment}'
 var nsgName = 'nsg-${applicationName}-${regionName}-${environment}'
 var applicationId = toLower(applicationCode)
 
-
-
-// Virtual network and network security group
-module trainingNsg 'modules/nsg.bicep' = { 
-  name: 'nsg-${name}-training-${uniqueSuffix}-deployment'
+//Modules
+module setAsgByFunction 'modules/asg.bicep' = { 
+  name: 'asg-${applicationName}-${environment}-deployment'
   params: {
     location: location
-    tags: tags 
-    nsgName: 'nsg-${name}-training-${uniqueSuffix}'
+    applicationId: applicationId
+    environment: environment
   }
-
 }
+
 module scoringNsg 'modules/nsg.bicep' = { 
   name: 'nsg-${name}-scoring-${uniqueSuffix}-deployment'
   params: {
