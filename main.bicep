@@ -23,14 +23,95 @@ param environment string = 'dev'
 @description('Azure Bastion Subnet CIDR')
 param bastionSubnet string = '10.x.y.0/24'
 
-@description('Active Directory Subnet CIDR')
-param activeDirectorySubnet string = '10.x.y.0/24'
+//Not Needed?
+//@description('Active Directory Subnet CIDR')
+//param activeDirectorySubnet string = '10.x.y.0/24'
 
 @description('Monitoring Subnet CIDR')
 param monitoringSubnet string = '10.x.y.0/24'
 
-  //I added these override switches just in case the naming convention for existing resources
-  //don't follow the standard.
+@description('Application Server Destination TCP Ports')
+param applicationServerDestinationTcpPorts array = ['1024-49151']
+@description('Application Server Destination UDP Ports')
+param applicationServerDestinationUdpPorts array = ['1024-49151']
+
+@description('Build Server Destination TCP Ports')
+param buildServerDestinationTcpPorts array = []
+@description('Build Server Destination UDP Ports')
+param buildServerDestinationUdpPorts array = []
+
+@description('Caching Server Destination TCP Ports')
+param cachingServerDestinationTcpPorts array = ['6379-6380', '9443', '8080', '8000-8001']
+@description('Caching Server Destination UDP Ports')
+param cachingServerDestinationUdpPorts array = ['53', '5353']
+
+@description('DataWarehouse Destination TCP Ports')
+param dataWarehouseDestinationTcpPorts array = ['1433-1434']
+@description('DataWarehouse Destination UDP Ports')
+param dataWarehouseDestinationUdpPorts array = ['1434']
+
+@description('Database Destination TCP Ports')
+param databaseDestinationTcpPorts array = []
+@description('DatabaseDestination UDP Ports')
+param databaseDestinationUdpPorts array = []
+
+@description('Development Server Destination TCP Ports')
+param developmentServerDestinationTcpPorts array = []
+@description('Development Server Destination UDP Ports')
+param developmentServerDestinationUdpPorts array = []
+
+@description('Domain Controller Destination TCP Ports')
+param domainControllerServerDestinationTcpPorts array = []
+@description('Domain Controller Destination UDP Ports')
+param domainControllerServerDestinationUdpPorts array = []
+
+@description('FTP File Server Destination TCP Ports')
+param ftpFileServerDestinationTcpPorts array = []
+@description('FTP File Server Destination UDP Ports')
+param ftpFileServerDestinationUdpPorts array = []
+
+@description('Object File Server Destination TCP Ports')
+param objFileServerDestinationTcpPorts array = []
+@description('Object File Server Destination UDP Ports')
+param objFileServerDestinationUdpPorts array = []
+
+@description('SCP (SSH/SFTP) File Server Destination TCP Ports')
+param scpFileServerDestinationTcpPorts array = []
+@description('SCP (SSH/SFTP) File Server Destination UDP Ports')
+param scpFileServerDestinationUdpPorts array = []
+
+@description('SMB/SAMBA/Windows File Server Destination TCP Ports')
+param smbFileServerDestinationTcpPorts array = []
+@description('SMB/SAMBA/Windows File Server Destination UDP Ports')
+param smbFileServerDestinationUdpPorts array = []
+
+@description('Jump Server Destination TCP Ports')
+param jumpServerDestinationTcpPorts array = []
+@description('Jump Server Destination UDP Ports')
+param jumpServerDestinationUdpPorts array = []
+
+@description('Logging Server Destination TCP Ports')
+param loggingServerDestinationTcpPorts array = []
+@description('Logging Server Destination UDP Ports')
+param loggingServerDestinationUdpPorts array = []
+
+@description('Print Server Destination TCP Ports')
+param printServerDestinationTcpPorts array = []
+@description('Print Server Destination UDP Ports')
+param printServerDestinationUdpPorts array = []
+
+@description('Proxy Server Destination TCP Ports')
+param proxyServerDestinationTcpPorts array = []
+@description('Proxy Server Destination UDP Ports')
+param proxyServerDestinationUdpPorts array = []
+
+@description('Web Server Destination TCP Ports')
+param webServerDestinationTcpPorts array = []
+@description('Web Server Destination UDP Ports')
+param webServerDestinationUdpPorts array = []
+
+//I added these override switches just in case the naming convention for existing resources
+//don't follow the standard.
 @description('Override Subscription Name?')
 param overrideSubscription bool = false
 
@@ -61,14 +142,14 @@ param tags object = {}
 // Variables
 var uniqueSuffix = '${regionName}-${environment}'
 var subscriptionName = 'sub-${businessUnitName}-${environment}'
-var vnetName= 'vnet-${businessUnitName}-${regionName}-${environment}'
-var resourceGroupName= 'rg-${applicationName}-${regionName}-${environment}'
-var subnetName= 'snet-${applicationName}-${regionName}-${environment}'
+var vnetName = 'vnet-${businessUnitName}-${regionName}-${environment}'
+var resourceGroupName = 'rg-${applicationName}-${regionName}-${environment}'
+var subnetName = 'snet-${applicationName}-${regionName}-${environment}'
 var nsgName = 'nsg-${applicationName}-${regionName}-${environment}'
 var applicationId = toLower(applicationCode)
 
 //Modules
-module setAsgByFunction 'modules/asg.bicep' = { 
+module setAsgByFunction 'modules/asg.bicep' = {
   name: 'asg-${applicationName}-${environment}-deployment'
   params: {
     location: location
@@ -77,11 +158,63 @@ module setAsgByFunction 'modules/asg.bicep' = {
   }
 }
 
-module scoringNsg 'modules/nsg.bicep' = { 
-  name: 'nsg-${name}-scoring-${uniqueSuffix}-deployment'
+module setNsgByApplication 'modules/nsg.bicep' = { 
+  name: 'nsg-${applicationName}-${regionName}-${environment}-deployment'
   params: {
     location: location
-    tags: tags 
-    nsgName: 'nsg-${name}-scoring-${uniqueSuffix}'
+    applicationName: applicationName
+    environment: environment
+    regionName: regionName
+    bastionSubnet: bastionSubnet
+    monitoringSubnet: monitoringSubnet
+    tags: tags
+    applicationServerAsgId: setAsgByFunction.outputs.applicationServerAsgId
+    buildServerAsgId: setAsgByFunction.outputs.buildServerAsgId
+    cachingServerAsgId: setAsgByFunction.outputs.cachingServerAsgId
+    dataWarehouseAsgId: setAsgByFunction.outputs.dataWarehouseAsgId
+    databaseAsgId: setAsgByFunction.outputs.databaseAsgId
+    developmentServerAsgId: setAsgByFunction.outputs.developmentServerAsgId
+    domainControllerServerAsgId: setAsgByFunction.outputs.domainControllerServerAsgId
+    ftpFileServerAsgId: setAsgByFunction.outputs.ftpFileServerAsgId
+    objFileServerAsgId: setAsgByFunction.outputs.objFileServerAsgId
+    scpFileServerAsgId: setAsgByFunction.outputs.scpFileServerAsgId
+    smbFileServerAsgId: setAsgByFunction.outputs.smbFileServerAsgId 
+    jumpServerAsgId: setAsgByFunction.outputs.jumpServerAsgId
+    loggingServerAsgId: setAsgByFunction.outputs.loggingServerAsgId
+    printServerAsgId: setAsgByFunction.outputs.printServerAsgId
+    proxyServerAsgId: setAsgByFunction.outputs.proxyServerAsgId
+    webServerAsgId: setAsgByFunction.outputs.webServerAsgId
+    applicationServerDestinationTcpPorts: applicationServerDestinationTcpPorts
+    buildServerDestinationTcpPorts: buildServerDestinationTcpPorts
+    cachingServerDestinationTcpPorts: cachingServerDestinationTcpPorts
+    dataWarehouseDestinationTcpPorts: dataWarehouseDestinationTcpPorts
+    databaseDestinationTcpPorts: databaseDestinationTcpPorts
+    developmentServerDestinationTcpPorts: developmentServerDestinationTcpPorts
+    domainControllerServerDestinationTcpPorts: domainControllerServerDestinationTcpPorts
+    ftpFileServerDestinationTcpPorts: ftpFileServerDestinationTcpPorts
+    objFileServerDestinationTcpPorts: objFileServerDestinationTcpPorts
+    scpFileServerDestinationTcpPorts: scpFileServerDestinationTcpPorts
+    smbFileServerDestinationTcpPorts: smbFileServerDestinationTcpPorts
+    jumpServerDestinationTcpPorts: jumpServerDestinationTcpPorts
+    loggingServerDestinationTcpPorts: loggingServerDestinationTcpPorts
+    printServerDestinationTcpPorts: printServerDestinationTcpPorts
+    proxyServerDestinationTcpPorts: proxyServerDestinationTcpPorts
+    webServerDestinationTcpPorts: webServerDestinationTcpPorts
+    applicationServerDestinationUdpPorts: applicationServerDestinationUdpPorts
+    buildServerDestinationUdpPorts: buildServerDestinationUdpPorts
+    cachingServerDestinationUdpPorts: cachingServerDestinationUdpPorts
+    dataWarehouseDestinationUdpPorts: dataWarehouseDestinationUdpPorts
+    databaseDestinationUdpPorts: databaseDestinationUdpPorts
+    developmentServerDestinationUdpPorts: developmentServerDestinationUdpPorts
+    domainControllerServerDestinationUdpPorts: domainControllerServerDestinationUdpPorts
+    ftpFileServerDestinationUdpPorts: ftpFileServerDestinationUdpPorts
+    objFileServerDestinationUdpPorts: objFileServerDestinationUdpPorts
+    scpFileServerDestinationUdpPorts: scpFileServerDestinationUdpPorts
+    smbFileServerDestinationUdpPorts: smbFileServerDestinationUdpPorts
+    jumpServerDestinationUdpPorts: jumpServerDestinationUdpPorts
+    loggingServerDestinationUdpPorts: loggingServerDestinationUdpPorts
+    printServerDestinationUdpPorts: printServerDestinationUdpPorts
+    proxyServerDestinationUdpPorts: proxyServerDestinationUdpPorts
+    webServerDestinationUdpPorts: webServerDestinationUdpPorts
   }
 }
