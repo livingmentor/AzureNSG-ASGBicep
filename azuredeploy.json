@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "15561152321199280990"
+      "templateHash": "4227146251620137350"
     }
   },
   "parameters": {
@@ -822,7 +822,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "14887072392799653949"
+              "templateHash": "17788230039365392309"
             }
           },
           "parameters": {
@@ -1065,7 +1065,7 @@
                   {
                     "name": "AllowBastion",
                     "properties": {
-                      "priority": 100,
+                      "priority": 10,
                       "access": "Allow",
                       "description": "Allow management traffic (RDP/SSH) from bastion host subnet",
                       "destinationAddressPrefix": "VirtualNetwork",
@@ -1082,7 +1082,7 @@
                   {
                     "name": "AllowMonitoring",
                     "properties": {
-                      "priority": 200,
+                      "priority": 20,
                       "access": "Allow",
                       "description": "Allow ICMP from Monitoring Subnet",
                       "destinationAddressPrefix": "VirtualNetwork",
@@ -1094,9 +1094,63 @@
                     }
                   },
                   {
+                    "name": "AllowInternalWeb",
+                    "properties": {
+                      "priority": 30,
+                      "access": "Allow",
+                      "description": "Allow Web Traffic from \"VirtualNetwork\"",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRange": "443",
+                      "direction": "Inbound",
+                      "protocol": "Tcp",
+                      "sourceAddressPrefix": "VirtualNetwork",
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowInternalAdTcp",
+                    "properties": {
+                      "priority": 40,
+                      "access": "Allow",
+                      "description": "Allow AD Traffic from \"VirtualNetwork\"",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('domainControllerServerDestinationTcpPorts')]",
+                      "direction": "Inbound",
+                      "protocol": "Tcp",
+                      "sourceAddressPrefix": "VirtualNetwork",
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowInternalAdUdp",
+                    "properties": {
+                      "priority": 50,
+                      "access": "Allow",
+                      "description": "Allow AD Traffic from \"VirtualNetwork\"",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('domainControllerServerDestinationUdpPorts')]",
+                      "direction": "Inbound",
+                      "protocol": "Tcp",
+                      "sourceAddressPrefix": "VirtualNetwork",
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
                     "name": "AllowApplicationServerTcp",
                     "properties": {
-                      "priority": 300,
+                      "priority": 60,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Application Server Logic TCP Traffic",
@@ -1163,7 +1217,7 @@
                   {
                     "name": "AllowApplicationServerUdp",
                     "properties": {
-                      "priority": 400,
+                      "priority": 70,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Application Server Logic UDP Traffic",
@@ -1230,7 +1284,7 @@
                   {
                     "name": "AllowBuildServerTcp",
                     "properties": {
-                      "priority": 500,
+                      "priority": 80,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Build Server TCP Traffic",
@@ -1297,7 +1351,7 @@
                   {
                     "name": "AllowBuildServerUdp",
                     "properties": {
-                      "priority": 600,
+                      "priority": 90,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Build Server Logic UDP Traffic",
@@ -1364,7 +1418,7 @@
                   {
                     "name": "AllowCachingServerTcp",
                     "properties": {
-                      "priority": 700,
+                      "priority": 100,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Caching Server Logic TCP Traffic",
@@ -1431,7 +1485,7 @@
                   {
                     "name": "AllowCachingServerUdp",
                     "properties": {
-                      "priority": 800,
+                      "priority": 110,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Caching Server Logic UDP Traffic",
@@ -1498,7 +1552,7 @@
                   {
                     "name": "AllowDataWarehouseTcp",
                     "properties": {
-                      "priority": 900,
+                      "priority": 120,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow DataWarehouse TCP Traffic",
@@ -1565,7 +1619,7 @@
                   {
                     "name": "AllowDataWarehouseUdp",
                     "properties": {
-                      "priority": 1000,
+                      "priority": 130,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow DataWarehouse UDP Traffic",
@@ -1632,7 +1686,7 @@
                   {
                     "name": "AllowDatabaseTcp",
                     "properties": {
-                      "priority": 900,
+                      "priority": 140,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Database TCP Traffic",
@@ -1699,7 +1753,7 @@
                   {
                     "name": "AllowDatabaseUdp",
                     "properties": {
-                      "priority": 1000,
+                      "priority": 150,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Database UDP Traffic",
@@ -1766,7 +1820,7 @@
                   {
                     "name": "AllowDevelopmentServerTcp",
                     "properties": {
-                      "priority": 900,
+                      "priority": 160,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Development Server TCP Traffic",
@@ -1833,7 +1887,7 @@
                   {
                     "name": "AllowDevelopmentServerUdp",
                     "properties": {
-                      "priority": 1000,
+                      "priority": 170,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Development Server UDP Traffic",
@@ -1900,7 +1954,7 @@
                   {
                     "name": "AllowDomainControllerServerTcp",
                     "properties": {
-                      "priority": 900,
+                      "priority": 180,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow DataWarehouse TCP Traffic",
@@ -1967,7 +2021,7 @@
                   {
                     "name": "AllowDomainControllerServerUdp",
                     "properties": {
-                      "priority": 1000,
+                      "priority": 190,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow DomainControllerServer UDP Traffic",
@@ -2034,7 +2088,7 @@
                   {
                     "name": "AllowFtpFileServerTcp",
                     "properties": {
-                      "priority": 900,
+                      "priority": 200,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow FTP TCP Traffic",
@@ -2101,7 +2155,7 @@
                   {
                     "name": "AllowFtpFileServerUdp",
                     "properties": {
-                      "priority": 1000,
+                      "priority": 210,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow ftpFileServer UDP Traffic",
@@ -2168,7 +2222,7 @@
                   {
                     "name": "AllowObjFileServerTcp",
                     "properties": {
-                      "priority": 900,
+                      "priority": 220,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Object File Server TCP Traffic",
@@ -2235,7 +2289,7 @@
                   {
                     "name": "AllowObjFileServerUdp",
                     "properties": {
-                      "priority": 1000,
+                      "priority": 230,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow objFileServer UDP Traffic",
@@ -2302,7 +2356,7 @@
                   {
                     "name": "AllowScpFileServerTcp",
                     "properties": {
-                      "priority": 900,
+                      "priority": 240,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow SCP (SSH, aka SFTP) File Server TCP Traffic",
@@ -2369,7 +2423,7 @@
                   {
                     "name": "AllowScpFileServerUdp",
                     "properties": {
-                      "priority": 1000,
+                      "priority": 250,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow SCP (SSH, aka SFTP) File Server UDP Traffic",
@@ -2436,7 +2490,7 @@
                   {
                     "name": "AllowSmbFileServerTcp",
                     "properties": {
-                      "priority": 900,
+                      "priority": 260,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow SMB File Server TCP Traffic",
@@ -2503,7 +2557,7 @@
                   {
                     "name": "AllowSmbFileServerUdp",
                     "properties": {
-                      "priority": 1000,
+                      "priority": 270,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow SMB File Server UDP Traffic",
@@ -2570,7 +2624,7 @@
                   {
                     "name": "AllowJumpServerTcp",
                     "properties": {
-                      "priority": 900,
+                      "priority": 280,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Jump Server TCP Traffic",
@@ -2637,7 +2691,7 @@
                   {
                     "name": "AllowJumpServerUdp",
                     "properties": {
-                      "priority": 1000,
+                      "priority": 290,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Jump Server UDP Traffic",
@@ -2704,7 +2758,7 @@
                   {
                     "name": "AllowLoggingServerTcp",
                     "properties": {
-                      "priority": 900,
+                      "priority": 300,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Logging Server TCP Traffic",
@@ -2771,7 +2825,7 @@
                   {
                     "name": "AllowLoggingServerUdp",
                     "properties": {
-                      "priority": 1000,
+                      "priority": 310,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Logging Server UDP Traffic",
@@ -2838,7 +2892,7 @@
                   {
                     "name": "AllowPrintServerTcp",
                     "properties": {
-                      "priority": 900,
+                      "priority": 320,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow print Server TCP Traffic",
@@ -2905,7 +2959,7 @@
                   {
                     "name": "AllowPrintServerUdp",
                     "properties": {
-                      "priority": 1000,
+                      "priority": 330,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Print Server UDP Traffic",
@@ -2972,7 +3026,7 @@
                   {
                     "name": "AllowProxyServerTcp",
                     "properties": {
-                      "priority": 900,
+                      "priority": 340,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Proxy Server TCP Traffic",
@@ -3039,7 +3093,7 @@
                   {
                     "name": "AllowProxyServerUdp",
                     "properties": {
-                      "priority": 1000,
+                      "priority": 350,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Proxy Server UDP Traffic",
@@ -3106,7 +3160,7 @@
                   {
                     "name": "AllowWebServerTcp",
                     "properties": {
-                      "priority": 900,
+                      "priority": 360,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Web Server TCP Traffic",
@@ -3173,7 +3227,7 @@
                   {
                     "name": "AllowWebServerUdp",
                     "properties": {
-                      "priority": 1000,
+                      "priority": 370,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Web Server UDP Traffic",
@@ -3234,6 +3288,62 @@
                           "id": "[parameters('webServerAsgId')]"
                         }
                       ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "DenyEverythingElseInbound",
+                    "properties": {
+                      "priority": 4000,
+                      "access": "Deny",
+                      "description": "Deny what is not already allowed",
+                      "destinationAddressPrefix": "*",
+                      "destinationPortRange": "*",
+                      "direction": "Inbound",
+                      "protocol": "*",
+                      "sourceAddressPrefix": "*",
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowVnet",
+                    "properties": {
+                      "priority": 15,
+                      "access": "Allow",
+                      "description": "Allow vnet to vnet",
+                      "destinationAddressPrefix": "VirtualNetwork",
+                      "destinationPortRange": "*",
+                      "direction": "Outbound",
+                      "protocol": "*",
+                      "sourceAddressPrefix": "VirtualNetwork",
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowInternet",
+                    "properties": {
+                      "priority": 25,
+                      "access": "Allow",
+                      "description": "Allow vnet to Internet (Still passes through Firewall)",
+                      "destinationAddressPrefix": "Internet",
+                      "destinationPortRange": "*",
+                      "direction": "Outbound",
+                      "protocol": "*",
+                      "sourceAddressPrefix": "VirtualNetwork",
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "DenyEverythingElseOutbound",
+                    "properties": {
+                      "priority": 4005,
+                      "access": "Deny",
+                      "description": "Deny what is not already allowed",
+                      "destinationAddressPrefix": "*",
+                      "destinationPortRange": "*",
+                      "direction": "Outbound",
+                      "protocol": "*",
+                      "sourceAddressPrefix": "*",
                       "sourcePortRange": "*"
                     }
                   }

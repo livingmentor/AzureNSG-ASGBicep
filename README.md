@@ -12,6 +12,8 @@ Though there can be a many-to-one relationship between ASGs and NICs, the intent
 
 NSGs will have rules that allow source ASGs to Destination NSGs.  However, the port ranges are configures as a parameter that maps to the servers function.  For example, a Web Server would be assigned the Web Server ASG, specific to a given application, that allows other NICs assigned a different ASG within the same application.  The defaut destination port ranges are configured as a parameter.  However, the defaults are not meant to be exhaustive and will likely require additional configuration on an application-by-application basis.  As this collection continues to evolve, the default ports may change.
 
+This collection is currently untested.  Use at your own risk.
+
 ## Files Description
 - `main.bicep`: The primary script for deploying the entire configuration. It integrates other Bicep files and sets up the necessary Azure resources.
 - `nsg.bicep`: Configures Network Security Groups (NSGs) in relation to different types of ASGs.
