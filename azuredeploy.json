@@ -1,0 +1,3312 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.24.24.22086",
+      "templateHash": "15561152321199280990"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Azure region used for the deployment resources."
+      }
+    },
+    "regionName": {
+      "type": "string",
+      "defaultValue": "usc",
+      "metadata": {
+        "description": "Azure region code used in naming convention"
+      }
+    },
+    "businessUnitName": {
+      "type": "string",
+      "defaultValue": "MyBU",
+      "metadata": {
+        "description": "Business Unit Name (No Spaces)"
+      }
+    },
+    "applicationName": {
+      "type": "string",
+      "defaultValue": "MyApplication",
+      "metadata": {
+        "description": "Application Name (No Spaces)"
+      }
+    },
+    "applicationCode": {
+      "type": "string",
+      "defaultValue": "MYAP",
+      "metadata": {
+        "description": "4 Digit Application Code"
+      }
+    },
+    "environment": {
+      "type": "string",
+      "defaultValue": "dev",
+      "metadata": {
+        "description": "Environment (dev, prod, qa)"
+      }
+    },
+    "bastionSubnet": {
+      "type": "string",
+      "defaultValue": "10.x.y.0/24",
+      "metadata": {
+        "description": "Azure Bastion Subnet CIDR"
+      }
+    },
+    "monitoringSubnet": {
+      "type": "string",
+      "defaultValue": "10.x.y.0/24",
+      "metadata": {
+        "description": "Monitoring Subnet CIDR"
+      }
+    },
+    "applicationServerDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "1024-49151"
+      ],
+      "metadata": {
+        "description": "Application Server Destination TCP Ports"
+      }
+    },
+    "applicationServerDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "1024-49151"
+      ],
+      "metadata": {
+        "description": "Application Server Destination UDP Ports"
+      }
+    },
+    "buildServerDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Build Server Destination TCP Ports"
+      }
+    },
+    "buildServerDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Build Server Destination UDP Ports"
+      }
+    },
+    "cachingServerDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "6379-6380",
+        "9443",
+        "8080",
+        "8000-8001"
+      ],
+      "metadata": {
+        "description": "Caching Server Destination TCP Ports"
+      }
+    },
+    "cachingServerDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "53",
+        "5353"
+      ],
+      "metadata": {
+        "description": "Caching Server Destination UDP Ports"
+      }
+    },
+    "dataWarehouseDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "1433-1434"
+      ],
+      "metadata": {
+        "description": "DataWarehouse Destination TCP Ports"
+      }
+    },
+    "dataWarehouseDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "1434"
+      ],
+      "metadata": {
+        "description": "DataWarehouse Destination UDP Ports"
+      }
+    },
+    "databaseDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "135",
+        "139",
+        "443",
+        "445",
+        "1433-1434",
+        "2383",
+        "2393-2394",
+        "2725",
+        "3882",
+        "4022",
+        "5022",
+        "7022",
+        "49152-65535"
+      ],
+      "metadata": {
+        "description": "Database Destination TCP Ports"
+      }
+    },
+    "databaseDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "135",
+        "138",
+        "445",
+        "500",
+        "1434",
+        "2382",
+        "3343",
+        "4500",
+        "5000-5099",
+        "8011-8031"
+      ],
+      "metadata": {
+        "description": "DatabaseDestination UDP Ports"
+      }
+    },
+    "developmentServerDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Development Server Destination TCP Ports"
+      }
+    },
+    "developmentServerDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Development Server Destination UDP Ports"
+      }
+    },
+    "domainControllerServerDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "53",
+        "88",
+        "135",
+        "389",
+        "445",
+        "636",
+        "1723",
+        "3268-3269"
+      ],
+      "metadata": {
+        "description": "Domain Controller Destination TCP Ports"
+      }
+    },
+    "domainControllerServerDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "53",
+        "88",
+        "389"
+      ],
+      "metadata": {
+        "description": "Domain Controller Destination UDP Ports"
+      }
+    },
+    "ftpFileServerDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "21"
+      ],
+      "metadata": {
+        "description": "FTP File Server Destination TCP Ports"
+      }
+    },
+    "ftpFileServerDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "FTP File Server Destination UDP Ports"
+      }
+    },
+    "objFileServerDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "443"
+      ],
+      "metadata": {
+        "description": "Object File Server (blobs, for example) Destination TCP Ports"
+      }
+    },
+    "objFileServerDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Object File Server (blobs, for example) Destination UDP Ports"
+      }
+    },
+    "scpFileServerDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "22"
+      ],
+      "metadata": {
+        "description": "SCP (SSH/SFTP) File Server Destination TCP Ports"
+      }
+    },
+    "scpFileServerDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "SCP (SSH/SFTP) File Server Destination UDP Ports"
+      }
+    },
+    "smbFileServerDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "139",
+        "445"
+      ],
+      "metadata": {
+        "description": "SMB/SAMBA/Windows File Server Destination TCP Ports"
+      }
+    },
+    "smbFileServerDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "137-138"
+      ],
+      "metadata": {
+        "description": "SMB/SAMBA/Windows File Server Destination UDP Ports"
+      }
+    },
+    "jumpServerDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Jump Server Destination TCP Ports"
+      }
+    },
+    "jumpServerDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Jump Server Destination UDP Ports"
+      }
+    },
+    "loggingServerDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "601"
+      ],
+      "metadata": {
+        "description": "Logging Server Destination TCP Ports"
+      }
+    },
+    "loggingServerDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "514"
+      ],
+      "metadata": {
+        "description": "Logging Server Destination UDP Ports"
+      }
+    },
+    "printServerDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "135",
+        "139",
+        "445",
+        "49152-65535"
+      ],
+      "metadata": {
+        "description": "Print Server Destination TCP Ports"
+      }
+    },
+    "printServerDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "137-138"
+      ],
+      "metadata": {
+        "description": "Print Server Destination UDP Ports"
+      }
+    },
+    "proxyServerDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "22",
+        "80",
+        "443",
+        "1080-1081",
+        "3128",
+        "8080",
+        "8008"
+      ],
+      "metadata": {
+        "description": "Proxy Server Destination TCP Ports"
+      }
+    },
+    "proxyServerDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Proxy Server Destination UDP Ports"
+      }
+    },
+    "webServerDestinationTcpPorts": {
+      "type": "array",
+      "defaultValue": [
+        "80",
+        "443"
+      ],
+      "metadata": {
+        "description": "Web Server Destination TCP Ports"
+      }
+    },
+    "webServerDestinationUdpPorts": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Web Server Destination UDP Ports"
+      }
+    },
+    "overrideVnet": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Override vNet Name?"
+      }
+    },
+    "overrideVnetName": {
+      "type": "string",
+      "defaultValue": "vnet-{bu}-{regionCode}-{env}",
+      "metadata": {
+        "description": "vNet Name.  Set the appropriate BU, Region Code & Environment"
+      }
+    },
+    "overrideSubnet": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Override subnet Name?"
+      }
+    },
+    "overrideSubnetName": {
+      "type": "string",
+      "defaultValue": "snet-{application}-{regionCode}-{env}",
+      "metadata": {
+        "description": "Subnet Name.  Set the appropriate BU, Application, Region Code & Environment"
+      }
+    },
+    "tags": {
+      "type": "object",
+      "defaultValue": {},
+      "metadata": {
+        "description": "Set of tags to apply to all resources."
+      }
+    }
+  },
+  "variables": {
+    "vnetName": "[format('vnet-{0}-{1}-{2}', parameters('businessUnitName'), parameters('regionName'), parameters('environment'))]",
+    "subnetName": "[format('snet-{0}-{1}-{2}', parameters('applicationName'), parameters('regionName'), parameters('environment'))]",
+    "nsgName": "[format('nsg-{0}-{1}-{2}', parameters('applicationName'), parameters('regionName'), parameters('environment'))]",
+    "applicationId": "[toLower(parameters('applicationCode'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "[format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "applicationId": {
+            "value": "[variables('applicationId')]"
+          },
+          "environment": {
+            "value": "[parameters('environment')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.24.24.22086",
+              "templateHash": "9731011622523566603"
+            }
+          },
+          "parameters": {
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Azure region used for the deployment resources."
+              }
+            },
+            "applicationId": {
+              "type": "string",
+              "defaultValue": "myap",
+              "metadata": {
+                "description": "4 Digit Application ID"
+              }
+            },
+            "environment": {
+              "type": "string",
+              "defaultValue": "dev",
+              "metadata": {
+                "description": "Environment (dev, prod, qa)"
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-app-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-bld-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-csh-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-dwh-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-dbx-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-dev-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-dcx-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-ftp-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-obj-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-scp-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-fil-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-jmp-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-log-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-prt-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-prx-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-web-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            }
+          ],
+          "outputs": {
+            "applicationServerAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-app-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
+            "buildServerAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-bld-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
+            "cachingServerAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-csh-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
+            "dataWarehouseAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-dwh-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
+            "databaseAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-dbx-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
+            "developmentServerAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-dev-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
+            "domainControllerServerAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-dcx-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
+            "ftpFileServerAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-ftp-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
+            "objFileServerAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-obj-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
+            "scpFileServerAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-scp-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
+            "smbFileServerAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-fil-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
+            "jumpServerAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-jmp-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
+            "loggingServerAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-log-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
+            "printServerAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-prt-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
+            "proxyServerAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-prx-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
+            "webServerAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-web-{1}', parameters('applicationId'), parameters('environment')))]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "[format('{0}-deployment', variables('nsgName'))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "applicationName": {
+            "value": "[parameters('applicationName')]"
+          },
+          "environment": {
+            "value": "[parameters('environment')]"
+          },
+          "regionName": {
+            "value": "[parameters('regionName')]"
+          },
+          "bastionSubnet": {
+            "value": "[parameters('bastionSubnet')]"
+          },
+          "monitoringSubnet": {
+            "value": "[parameters('monitoringSubnet')]"
+          },
+          "tags": {
+            "value": "[parameters('tags')]"
+          },
+          "applicationServerAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.applicationServerAsgId.value]"
+          },
+          "buildServerAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.buildServerAsgId.value]"
+          },
+          "cachingServerAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.cachingServerAsgId.value]"
+          },
+          "dataWarehouseAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.dataWarehouseAsgId.value]"
+          },
+          "databaseAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.databaseAsgId.value]"
+          },
+          "developmentServerAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.developmentServerAsgId.value]"
+          },
+          "domainControllerServerAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.domainControllerServerAsgId.value]"
+          },
+          "ftpFileServerAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.ftpFileServerAsgId.value]"
+          },
+          "objFileServerAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.objFileServerAsgId.value]"
+          },
+          "scpFileServerAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.scpFileServerAsgId.value]"
+          },
+          "smbFileServerAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.smbFileServerAsgId.value]"
+          },
+          "jumpServerAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.jumpServerAsgId.value]"
+          },
+          "loggingServerAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.loggingServerAsgId.value]"
+          },
+          "printServerAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.printServerAsgId.value]"
+          },
+          "proxyServerAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.proxyServerAsgId.value]"
+          },
+          "webServerAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.webServerAsgId.value]"
+          },
+          "applicationServerDestinationTcpPorts": {
+            "value": "[parameters('applicationServerDestinationTcpPorts')]"
+          },
+          "buildServerDestinationTcpPorts": {
+            "value": "[parameters('buildServerDestinationTcpPorts')]"
+          },
+          "cachingServerDestinationTcpPorts": {
+            "value": "[parameters('cachingServerDestinationTcpPorts')]"
+          },
+          "dataWarehouseDestinationTcpPorts": {
+            "value": "[parameters('dataWarehouseDestinationTcpPorts')]"
+          },
+          "databaseDestinationTcpPorts": {
+            "value": "[parameters('databaseDestinationTcpPorts')]"
+          },
+          "developmentServerDestinationTcpPorts": {
+            "value": "[parameters('developmentServerDestinationTcpPorts')]"
+          },
+          "domainControllerServerDestinationTcpPorts": {
+            "value": "[parameters('domainControllerServerDestinationTcpPorts')]"
+          },
+          "ftpFileServerDestinationTcpPorts": {
+            "value": "[parameters('ftpFileServerDestinationTcpPorts')]"
+          },
+          "objFileServerDestinationTcpPorts": {
+            "value": "[parameters('objFileServerDestinationTcpPorts')]"
+          },
+          "scpFileServerDestinationTcpPorts": {
+            "value": "[parameters('scpFileServerDestinationTcpPorts')]"
+          },
+          "smbFileServerDestinationTcpPorts": {
+            "value": "[parameters('smbFileServerDestinationTcpPorts')]"
+          },
+          "jumpServerDestinationTcpPorts": {
+            "value": "[parameters('jumpServerDestinationTcpPorts')]"
+          },
+          "loggingServerDestinationTcpPorts": {
+            "value": "[parameters('loggingServerDestinationTcpPorts')]"
+          },
+          "printServerDestinationTcpPorts": {
+            "value": "[parameters('printServerDestinationTcpPorts')]"
+          },
+          "proxyServerDestinationTcpPorts": {
+            "value": "[parameters('proxyServerDestinationTcpPorts')]"
+          },
+          "webServerDestinationTcpPorts": {
+            "value": "[parameters('webServerDestinationTcpPorts')]"
+          },
+          "applicationServerDestinationUdpPorts": {
+            "value": "[parameters('applicationServerDestinationUdpPorts')]"
+          },
+          "buildServerDestinationUdpPorts": {
+            "value": "[parameters('buildServerDestinationUdpPorts')]"
+          },
+          "cachingServerDestinationUdpPorts": {
+            "value": "[parameters('cachingServerDestinationUdpPorts')]"
+          },
+          "dataWarehouseDestinationUdpPorts": {
+            "value": "[parameters('dataWarehouseDestinationUdpPorts')]"
+          },
+          "databaseDestinationUdpPorts": {
+            "value": "[parameters('databaseDestinationUdpPorts')]"
+          },
+          "developmentServerDestinationUdpPorts": {
+            "value": "[parameters('developmentServerDestinationUdpPorts')]"
+          },
+          "domainControllerServerDestinationUdpPorts": {
+            "value": "[parameters('domainControllerServerDestinationUdpPorts')]"
+          },
+          "ftpFileServerDestinationUdpPorts": {
+            "value": "[parameters('ftpFileServerDestinationUdpPorts')]"
+          },
+          "objFileServerDestinationUdpPorts": {
+            "value": "[parameters('objFileServerDestinationUdpPorts')]"
+          },
+          "scpFileServerDestinationUdpPorts": {
+            "value": "[parameters('scpFileServerDestinationUdpPorts')]"
+          },
+          "smbFileServerDestinationUdpPorts": {
+            "value": "[parameters('smbFileServerDestinationUdpPorts')]"
+          },
+          "jumpServerDestinationUdpPorts": {
+            "value": "[parameters('jumpServerDestinationUdpPorts')]"
+          },
+          "loggingServerDestinationUdpPorts": {
+            "value": "[parameters('loggingServerDestinationUdpPorts')]"
+          },
+          "printServerDestinationUdpPorts": {
+            "value": "[parameters('printServerDestinationUdpPorts')]"
+          },
+          "proxyServerDestinationUdpPorts": {
+            "value": "[parameters('proxyServerDestinationUdpPorts')]"
+          },
+          "webServerDestinationUdpPorts": {
+            "value": "[parameters('webServerDestinationUdpPorts')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.24.24.22086",
+              "templateHash": "14887072392799653949"
+            }
+          },
+          "parameters": {
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Azure region used for the deployment resources."
+              }
+            },
+            "applicationName": {
+              "type": "string",
+              "defaultValue": "MyApplication",
+              "metadata": {
+                "description": "Application Name (No Spaces)"
+              }
+            },
+            "environment": {
+              "type": "string",
+              "defaultValue": "dev",
+              "metadata": {
+                "description": "Environment (dev, prod, qa)"
+              }
+            },
+            "regionName": {
+              "type": "string",
+              "defaultValue": "usc",
+              "metadata": {
+                "description": "Azure region code used in naming convention"
+              }
+            },
+            "bastionSubnet": {
+              "type": "string",
+              "defaultValue": "10.x.y.0/24",
+              "metadata": {
+                "description": "Azure Bastion Subnet CIDR"
+              }
+            },
+            "monitoringSubnet": {
+              "type": "string",
+              "defaultValue": "10.x.y.0/24",
+              "metadata": {
+                "description": "Monitoring Subnet CIDR"
+              }
+            },
+            "tags": {
+              "type": "object",
+              "defaultValue": {},
+              "metadata": {
+                "description": "Set of tags to apply to all resources."
+              }
+            },
+            "applicationServerAsgId": {
+              "type": "string"
+            },
+            "buildServerAsgId": {
+              "type": "string"
+            },
+            "cachingServerAsgId": {
+              "type": "string"
+            },
+            "dataWarehouseAsgId": {
+              "type": "string"
+            },
+            "databaseAsgId": {
+              "type": "string"
+            },
+            "developmentServerAsgId": {
+              "type": "string"
+            },
+            "domainControllerServerAsgId": {
+              "type": "string"
+            },
+            "ftpFileServerAsgId": {
+              "type": "string"
+            },
+            "objFileServerAsgId": {
+              "type": "string"
+            },
+            "scpFileServerAsgId": {
+              "type": "string"
+            },
+            "smbFileServerAsgId": {
+              "type": "string"
+            },
+            "jumpServerAsgId": {
+              "type": "string"
+            },
+            "loggingServerAsgId": {
+              "type": "string"
+            },
+            "printServerAsgId": {
+              "type": "string"
+            },
+            "proxyServerAsgId": {
+              "type": "string"
+            },
+            "webServerAsgId": {
+              "type": "string"
+            },
+            "applicationServerDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "buildServerDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "cachingServerDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "dataWarehouseDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "databaseDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "developmentServerDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "domainControllerServerDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "ftpFileServerDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "objFileServerDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "scpFileServerDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "smbFileServerDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "jumpServerDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "loggingServerDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "printServerDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "proxyServerDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "webServerDestinationTcpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "applicationServerDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "buildServerDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "cachingServerDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "dataWarehouseDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "databaseDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "developmentServerDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "domainControllerServerDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "ftpFileServerDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "objFileServerDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "scpFileServerDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "smbFileServerDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "jumpServerDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "loggingServerDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "printServerDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "proxyServerDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            },
+            "webServerDestinationUdpPorts": {
+              "type": "array",
+              "defaultValue": []
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/networkSecurityGroups",
+              "apiVersion": "2023-04-01",
+              "name": "[format('nsg-{0}-{1}-{2}', parameters('applicationName'), parameters('regionName'), parameters('environment'))]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "properties": {
+                "flushConnection": false,
+                "securityRules": [
+                  {
+                    "name": "AllowBastion",
+                    "properties": {
+                      "priority": 100,
+                      "access": "Allow",
+                      "description": "Allow management traffic (RDP/SSH) from bastion host subnet",
+                      "destinationAddressPrefix": "VirtualNetwork",
+                      "destinationPortRanges": [
+                        "3389",
+                        "22"
+                      ],
+                      "direction": "Inbound",
+                      "protocol": "Tcp",
+                      "sourceAddressPrefix": "[parameters('bastionSubnet')]",
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowMonitoring",
+                    "properties": {
+                      "priority": 200,
+                      "access": "Allow",
+                      "description": "Allow ICMP from Monitoring Subnet",
+                      "destinationAddressPrefix": "VirtualNetwork",
+                      "destinationPortRange": "*",
+                      "direction": "Inbound",
+                      "protocol": "Icmp",
+                      "sourceAddressPrefix": "[parameters('monitoringSubnet')]",
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowApplicationServerTcp",
+                    "properties": {
+                      "priority": 300,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Application Server Logic TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('applicationServerDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowApplicationServerUdp",
+                    "properties": {
+                      "priority": 400,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Application Server Logic UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('applicationServerDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowBuildServerTcp",
+                    "properties": {
+                      "priority": 500,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Build Server TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('buildServerDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowBuildServerUdp",
+                    "properties": {
+                      "priority": 600,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Build Server Logic UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('buildServerDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowCachingServerTcp",
+                    "properties": {
+                      "priority": 700,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Caching Server Logic TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('cachingServerDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowCachingServerUdp",
+                    "properties": {
+                      "priority": 800,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Caching Server Logic UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('cachingServerDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowDataWarehouseTcp",
+                    "properties": {
+                      "priority": 900,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow DataWarehouse TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('dataWarehouseDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowDataWarehouseUdp",
+                    "properties": {
+                      "priority": 1000,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow DataWarehouse UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('dataWarehouseDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowDatabaseTcp",
+                    "properties": {
+                      "priority": 900,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Database TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('databaseDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowDatabaseUdp",
+                    "properties": {
+                      "priority": 1000,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Database UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('databaseDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowDevelopmentServerTcp",
+                    "properties": {
+                      "priority": 900,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Development Server TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('developmentServerDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowDevelopmentServerUdp",
+                    "properties": {
+                      "priority": 1000,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Development Server UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('developmentServerDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowDomainControllerServerTcp",
+                    "properties": {
+                      "priority": 900,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow DataWarehouse TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('domainControllerServerDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowDomainControllerServerUdp",
+                    "properties": {
+                      "priority": 1000,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow DomainControllerServer UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('domainControllerServerDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowFtpFileServerTcp",
+                    "properties": {
+                      "priority": 900,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow FTP TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('ftpFileServerDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowFtpFileServerUdp",
+                    "properties": {
+                      "priority": 1000,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow ftpFileServer UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('ftpFileServerDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowObjFileServerTcp",
+                    "properties": {
+                      "priority": 900,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Object File Server TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('objFileServerDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowObjFileServerUdp",
+                    "properties": {
+                      "priority": 1000,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow objFileServer UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('objFileServerDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowScpFileServerTcp",
+                    "properties": {
+                      "priority": 900,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow SCP (SSH, aka SFTP) File Server TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('scpFileServerDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowScpFileServerUdp",
+                    "properties": {
+                      "priority": 1000,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow SCP (SSH, aka SFTP) File Server UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('scpFileServerDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowSmbFileServerTcp",
+                    "properties": {
+                      "priority": 900,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow SMB File Server TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('smbFileServerDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowSmbFileServerUdp",
+                    "properties": {
+                      "priority": 1000,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow SMB File Server UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('smbFileServerDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowJumpServerTcp",
+                    "properties": {
+                      "priority": 900,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Jump Server TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('jumpServerDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowJumpServerUdp",
+                    "properties": {
+                      "priority": 1000,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Jump Server UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('jumpServerDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowLoggingServerTcp",
+                    "properties": {
+                      "priority": 900,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Logging Server TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('loggingServerDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowLoggingServerUdp",
+                    "properties": {
+                      "priority": 1000,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Logging Server UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('loggingServerDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowPrintServerTcp",
+                    "properties": {
+                      "priority": 900,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow print Server TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('printServerDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowPrintServerUdp",
+                    "properties": {
+                      "priority": 1000,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Print Server UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('printServerDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowProxyServerTcp",
+                    "properties": {
+                      "priority": 900,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Proxy Server TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('proxyServerDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowProxyServerUdp",
+                    "properties": {
+                      "priority": 1000,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Proxy Server UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('proxyServerDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowWebServerTcp",
+                    "properties": {
+                      "priority": 900,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Web Server TCP Traffic",
+                      "protocol": "Tcp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('webServerDestinationTcpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowWebServerUdp",
+                    "properties": {
+                      "priority": 1000,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Web Server UDP Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "destinationPortRanges": "[parameters('webServerDestinationUdpPorts')]",
+                      "sourceApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('applicationServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('buildServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('cachingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('dataWarehouseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('databaseAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('developmentServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('domainControllerServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('ftpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('objFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('scpFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('smbFileServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('jumpServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('loggingServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('printServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('proxyServerAsgId')]"
+                        },
+                        {
+                          "id": "[parameters('webServerAsgId')]"
+                        }
+                      ],
+                      "sourcePortRange": "*"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "outputs": {
+            "nsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/networkSecurityGroups', format('nsg-{0}-{1}-{2}', parameters('applicationName'), parameters('regionName'), parameters('environment')))]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "[format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "nsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('{0}-deployment', variables('nsgName'))), '2022-09-01').outputs.nsgId.value]"
+          },
+          "vnetName": "[if(parameters('overrideVnet'), createObject('value', parameters('overrideVnetName')), createObject('value', variables('vnetName')))]",
+          "subnetName": "[if(parameters('overrideSubnet'), createObject('value', parameters('overrideSubnetName')), createObject('value', variables('subnetName')))]"
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.24.24.22086",
+              "templateHash": "8017700254118872183"
+            }
+          },
+          "parameters": {
+            "nsgId": {
+              "type": "string"
+            },
+            "vnetName": {
+              "type": "string"
+            },
+            "subnetName": {
+              "type": "string"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/virtualNetworks/subnets",
+              "apiVersion": "2023-04-01",
+              "name": "[format('{0}/{1}', parameters('vnetName'), parameters('subnetName'))]",
+              "properties": {
+                "networkSecurityGroup": {
+                  "id": "[parameters('nsgId')]"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', format('{0}-deployment', variables('nsgName')))]"
+      ]
+    }
+  ]
+}
