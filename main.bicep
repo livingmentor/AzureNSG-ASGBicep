@@ -51,79 +51,74 @@ param dataWarehouseDestinationTcpPorts array = ['1433-1434']
 param dataWarehouseDestinationUdpPorts array = ['1434']
 
 @description('Database Destination TCP Ports')
-param databaseDestinationTcpPorts array = []
+param databaseDestinationTcpPorts array = ['135', '139', '443', '445', '1433-1434', '2383', '2393-2394', '2725', '3882', '4022', '5022', '7022', '49152-65535']
 @description('DatabaseDestination UDP Ports')
-param databaseDestinationUdpPorts array = []
+param databaseDestinationUdpPorts array = ['135', '138', '445', '500', '1434', '2382', '3343', '4500', '5000-5099', '8011-8031']
 
 @description('Development Server Destination TCP Ports')
 param developmentServerDestinationTcpPorts array = []
 @description('Development Server Destination UDP Ports')
 param developmentServerDestinationUdpPorts array = []
 
+//TODO: Add Dynamic RPC port range or select a static port based on AD configuration
 @description('Domain Controller Destination TCP Ports')
-param domainControllerServerDestinationTcpPorts array = []
+param domainControllerServerDestinationTcpPorts array = ['53', '88', '135', '389', '445', '636', '1723', '3268-3269']
 @description('Domain Controller Destination UDP Ports')
-param domainControllerServerDestinationUdpPorts array = []
+param domainControllerServerDestinationUdpPorts array = ['53', '88', '389']
 
+//TODO: Determine how to enable Active FTP
 @description('FTP File Server Destination TCP Ports')
-param ftpFileServerDestinationTcpPorts array = []
+param ftpFileServerDestinationTcpPorts array = ['21']
 @description('FTP File Server Destination UDP Ports')
 param ftpFileServerDestinationUdpPorts array = []
 
-@description('Object File Server Destination TCP Ports')
-param objFileServerDestinationTcpPorts array = []
-@description('Object File Server Destination UDP Ports')
+//Add 80 if required/allowed
+@description('Object File Server (blobs, for example) Destination TCP Ports')
+param objFileServerDestinationTcpPorts array = ['443']
+@description('Object File Server (blobs, for example) Destination UDP Ports')
 param objFileServerDestinationUdpPorts array = []
 
+
 @description('SCP (SSH/SFTP) File Server Destination TCP Ports')
-param scpFileServerDestinationTcpPorts array = []
+param scpFileServerDestinationTcpPorts array = ['22']
 @description('SCP (SSH/SFTP) File Server Destination UDP Ports')
 param scpFileServerDestinationUdpPorts array = []
 
 @description('SMB/SAMBA/Windows File Server Destination TCP Ports')
-param smbFileServerDestinationTcpPorts array = []
+param smbFileServerDestinationTcpPorts array = ['139', '445']
 @description('SMB/SAMBA/Windows File Server Destination UDP Ports')
-param smbFileServerDestinationUdpPorts array = []
+param smbFileServerDestinationUdpPorts array = ['137-138']
 
+
+//Jump Servers shouldn't be used unless absolutely required.  Use Azure bastion instead.
+//Additional Configuration is required.  
 @description('Jump Server Destination TCP Ports')
 param jumpServerDestinationTcpPorts array = []
 @description('Jump Server Destination UDP Ports')
 param jumpServerDestinationUdpPorts array = []
 
 @description('Logging Server Destination TCP Ports')
-param loggingServerDestinationTcpPorts array = []
+param loggingServerDestinationTcpPorts array = ['601']
 @description('Logging Server Destination UDP Ports')
-param loggingServerDestinationUdpPorts array = []
+param loggingServerDestinationUdpPorts array = ['514']
 
 @description('Print Server Destination TCP Ports')
-param printServerDestinationTcpPorts array = []
+param printServerDestinationTcpPorts array = ['135', '139', '445', '49152-65535']
 @description('Print Server Destination UDP Ports')
-param printServerDestinationUdpPorts array = []
+param printServerDestinationUdpPorts array = ['137-138']
 
 @description('Proxy Server Destination TCP Ports')
-param proxyServerDestinationTcpPorts array = []
+param proxyServerDestinationTcpPorts array = ['22', '80', '443', '1080-1081', '3128', '8080', '8008']
 @description('Proxy Server Destination UDP Ports')
 param proxyServerDestinationUdpPorts array = []
 
 @description('Web Server Destination TCP Ports')
-param webServerDestinationTcpPorts array = []
+param webServerDestinationTcpPorts array = ['80', '443']
 @description('Web Server Destination UDP Ports')
 param webServerDestinationUdpPorts array = []
 
 //I added these override switches just in case the naming convention for existing resources
 //don't follow the standard.
-@description('Override Subscription Name?')
-param overrideSubscription bool = false
-
-@description('Subscription Name.  Set the appropriate BU & Environment')
-param overrideSubscriptionName string = 'sub-{bu}-{env}'
-
-@description('Override Resource Group Name?')
-param overrideResourceGroup bool = false
-
-@description('Resource Group Name.  Set the appropriate BU, Application, Region Code & Environment')
-param overrideResourceGroupName string = 'rg-{application}-{regionCode}-{env}'
-
 @description('Override vNet Name?')
 param overrideVnet bool = false
 
@@ -140,10 +135,7 @@ param overrideSubnetName string = 'snet-{application}-{regionCode}-{env}'
 param tags object = {}
 
 // Variables
-var uniqueSuffix = '${regionName}-${environment}'
-var subscriptionName = 'sub-${businessUnitName}-${environment}'
 var vnetName = 'vnet-${businessUnitName}-${regionName}-${environment}'
-var resourceGroupName = 'rg-${applicationName}-${regionName}-${environment}'
 var subnetName = 'snet-${applicationName}-${regionName}-${environment}'
 var nsgName = 'nsg-${applicationName}-${regionName}-${environment}'
 var applicationId = toLower(applicationCode)
@@ -159,7 +151,7 @@ module setAsgByFunction 'modules/asg.bicep' = {
 }
 
 module setNsgByApplication 'modules/nsg.bicep' = { 
-  name: 'nsg-${applicationName}-${regionName}-${environment}-deployment'
+  name: '${nsgName}-deployment'
   params: {
     location: location
     applicationName: applicationName
@@ -216,5 +208,14 @@ module setNsgByApplication 'modules/nsg.bicep' = {
     printServerDestinationUdpPorts: printServerDestinationUdpPorts
     proxyServerDestinationUdpPorts: proxyServerDestinationUdpPorts
     webServerDestinationUdpPorts: webServerDestinationUdpPorts
+  }
+}
+
+module setSubnetWithNsg 'modules/assignNsgToSubnet.bicep' = {
+  name: 'asg-${applicationName}-${environment}-deployment'
+  params: {
+    nsgId: setNsgByApplication.outputs.nsgId
+    vnetName: (overrideVnet) ? overrideVnetName : vnetName
+    subnetName: (overrideSubnet) ? overrideSubnetName : subnetName
   }
 }

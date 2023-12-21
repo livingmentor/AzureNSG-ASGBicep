@@ -139,7 +139,7 @@ resource symbolicname 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
 }
 */
 
-resource symbolicname 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
+resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
   name: 'nsg-${applicationName}-${regionName}-${environment}'
   location: location
   tags: tags
@@ -1235,3 +1235,5 @@ resource symbolicname 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
     ]
   }
 }
+
+output nsgId string = nsg.id
