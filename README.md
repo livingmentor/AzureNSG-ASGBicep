@@ -8,7 +8,7 @@ This collection of Bicep files facilitates the setup and configuration of Azure 
 
 The architecture of the NSGs & ASGs created from this collection assumes one NSG per subnet, and one subnet per application.  The intention is to create a baseline layer 4 security configuration that only allows intra-application communication.  However, the script also assumes some front end components to be reachable from all internal networks.  For example, webservers allow 443 from the "VirtualNetwork" tag. Active Directory Servers allow the set ports to be allowed from  the "VirtualNetwork" tag as well.  Additional inter-subnet or external access will require further configuration.  
 
-Though there can be a many-to-one relationship between ASGs and NICs, the intention is for a 1:1 ASG:NIC mapping. 
+Though there can be a many-to-many relationship between ASGs and NICs, the intention is for a 1:Many, ASG:NIC mapping. 
 
 NSGs will have rules that allow source ASGs to Destination NSGs.  However, the port ranges are configures as a parameter that maps to the servers function.  For example, a Web Server would be assigned the Web Server ASG, specific to a given application, that allows other NICs assigned a different ASG within the same application.  The defaut destination port ranges are configured as a parameter.  However, the defaults are not meant to be exhaustive and will likely require additional configuration on an application-by-application basis.  As this collection continues to evolve, the default ports may change.
 
