@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "8464970365538586803"
+      "templateHash": "11769273296708076713"
     }
   },
   "parameters": {
@@ -85,14 +85,18 @@
     },
     "buildServerDestinationTcpPorts": {
       "type": "array",
-      "defaultValue": [],
+      "defaultValue": [
+        "3389"
+      ],
       "metadata": {
         "description": "Build Server Destination TCP Ports"
       }
     },
     "buildServerDestinationUdpPorts": {
       "type": "array",
-      "defaultValue": [],
+      "defaultValue": [
+        "3389"
+      ],
       "metadata": {
         "description": "Build Server Destination UDP Ports"
       }
@@ -178,14 +182,18 @@
     },
     "developmentServerDestinationTcpPorts": {
       "type": "array",
-      "defaultValue": [],
+      "defaultValue": [
+        "3389"
+      ],
       "metadata": {
         "description": "Development Server Destination TCP Ports"
       }
     },
     "developmentServerDestinationUdpPorts": {
       "type": "array",
-      "defaultValue": [],
+      "defaultValue": [
+        "3389"
+      ],
       "metadata": {
         "description": "Development Server Destination UDP Ports"
       }
@@ -228,7 +236,9 @@
     },
     "ftpFileServerDestinationUdpPorts": {
       "type": "array",
-      "defaultValue": [],
+      "defaultValue": [
+        "21"
+      ],
       "metadata": {
         "description": "FTP File Server Destination UDP Ports"
       }
@@ -244,7 +254,9 @@
     },
     "objFileServerDestinationUdpPorts": {
       "type": "array",
-      "defaultValue": [],
+      "defaultValue": [
+        "443"
+      ],
       "metadata": {
         "description": "Object File Server (blobs, for example) Destination UDP Ports"
       }
@@ -260,7 +272,9 @@
     },
     "scpFileServerDestinationUdpPorts": {
       "type": "array",
-      "defaultValue": [],
+      "defaultValue": [
+        "22"
+      ],
       "metadata": {
         "description": "SCP (SSH/SFTP) File Server Destination UDP Ports"
       }
@@ -286,14 +300,18 @@
     },
     "jumpServerDestinationTcpPorts": {
       "type": "array",
-      "defaultValue": [],
+      "defaultValue": [
+        "3389"
+      ],
       "metadata": {
         "description": "Jump Server Destination TCP Ports"
       }
     },
     "jumpServerDestinationUdpPorts": {
       "type": "array",
-      "defaultValue": [],
+      "defaultValue": [
+        "3389"
+      ],
       "metadata": {
         "description": "Jump Server Destination UDP Ports"
       }
@@ -354,7 +372,9 @@
     },
     "proxyServerDestinationUdpPorts": {
       "type": "array",
-      "defaultValue": [],
+      "defaultValue": [
+        "16384 - 32767"
+      ],
       "metadata": {
         "description": "Proxy Server Destination UDP Ports"
       }
@@ -371,7 +391,10 @@
     },
     "webServerDestinationUdpPorts": {
       "type": "array",
-      "defaultValue": [],
+      "defaultValue": [
+        "80",
+        "443"
+      ],
       "metadata": {
         "description": "Web Server Destination UDP Ports"
       }
