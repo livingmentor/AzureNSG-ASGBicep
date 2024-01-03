@@ -28,6 +28,7 @@ param monitoringSubnet string = '10.x.y.0/24'
 param tags object = {}
 
 //Pass in all of the ASGs
+param mainApplicationAsgId string
 param applicationServerAsgId string
 param buildServerAsgId string
 param cachingServerAsgId string
@@ -178,22 +179,8 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: applicationServerDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
+
           ]
           sourcePortRange: '*'
         }
@@ -211,22 +198,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: applicationServerDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -244,22 +216,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: buildServerDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -277,22 +234,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: buildServerDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -310,22 +252,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: cachingServerDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -343,22 +270,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: cachingServerDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -376,22 +288,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: dataWarehouseDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -409,22 +306,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: dataWarehouseDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -442,22 +324,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: databaseDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -475,22 +342,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: databaseDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -508,22 +360,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: developmentServerDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -541,22 +378,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: developmentServerDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -574,22 +396,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: domainControllerServerDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -607,22 +414,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: domainControllerServerDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -640,22 +432,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: ftpFileServerDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -673,22 +450,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: ftpFileServerDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -706,22 +468,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: objFileServerDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -739,22 +486,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: objFileServerDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -772,22 +504,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: scpFileServerDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -805,22 +522,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: scpFileServerDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -838,22 +540,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: smbFileServerDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -871,22 +558,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: smbFileServerDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -904,22 +576,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: jumpServerDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -937,22 +594,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: jumpServerDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -970,22 +612,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: loggingServerDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -1003,22 +630,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: loggingServerDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -1036,22 +648,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: printServerDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -1069,22 +666,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: printServerDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -1102,22 +684,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: proxyServerDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -1135,22 +702,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: proxyServerDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -1168,22 +720,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: webServerDestinationTcpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }
@@ -1201,22 +738,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           ]
           destinationPortRanges: webServerDestinationUdpPorts
           sourceApplicationSecurityGroups: [
-            { id: applicationServerAsgId }
-            { id: buildServerAsgId }
-            { id: cachingServerAsgId }
-            { id: dataWarehouseAsgId }
-            { id: databaseAsgId }
-            { id: developmentServerAsgId }
-            { id: domainControllerServerAsgId }
-            { id: ftpFileServerAsgId }
-            { id: objFileServerAsgId }
-            { id: scpFileServerAsgId }
-            { id: smbFileServerAsgId }
-            { id: jumpServerAsgId }
-            { id: loggingServerAsgId }
-            { id: printServerAsgId }
-            { id: proxyServerAsgId }
-            { id: webServerAsgId }
+            { id: mainApplicationAsgId }
           ]
           sourcePortRange: '*'
         }

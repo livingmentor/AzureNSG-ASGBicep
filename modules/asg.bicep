@@ -7,6 +7,11 @@ param applicationId string = 'myap'
 @description('Environment (dev, prod, qa)')
 param environment string = 'dev'
 
+resource mainApplicationAsg 'Microsoft.Network/applicationSecurityGroups@2020-11-01' = {
+  name: 'asg-${applicationId}-main-${environment}'
+  location: location
+}
+
 resource applicationServerAsg 'Microsoft.Network/applicationSecurityGroups@2020-11-01' = {
   name: 'asg-${applicationId}-app-${environment}'
   location: location
@@ -87,6 +92,7 @@ resource webServerAsg 'Microsoft.Network/applicationSecurityGroups@2020-11-01' =
   location: location
 }
 
+output mainApplicationAsgId string = mainApplicationAsg.id
 output applicationServerAsgId string = applicationServerAsg.id
 output buildServerAsgId string = buildServerAsg.id
 output cachingServerAsgId string = cachingServerAsg.id

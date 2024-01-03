@@ -160,6 +160,7 @@ module setNsgByApplication 'modules/nsg.bicep' = {
     bastionSubnet: bastionSubnet
     monitoringSubnet: monitoringSubnet
     tags: tags
+    mainApplicationAsgId: setAsgByFunction.outputs.mainApplicationAsgId
     applicationServerAsgId: setAsgByFunction.outputs.applicationServerAsgId
     buildServerAsgId: setAsgByFunction.outputs.buildServerAsgId
     cachingServerAsgId: setAsgByFunction.outputs.cachingServerAsgId
