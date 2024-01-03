@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "10533321152836664818"
+      "templateHash": "4330697406415139023"
     }
   },
   "parameters": {
@@ -822,7 +822,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "17788230039365392309"
+              "templateHash": "4975514995999999810"
             }
           },
           "parameters": {
@@ -1065,7 +1065,7 @@
                   {
                     "name": "AllowBastion",
                     "properties": {
-                      "priority": 10,
+                      "priority": 110,
                       "access": "Allow",
                       "description": "Allow management traffic (RDP/SSH) from bastion host subnet",
                       "destinationAddressPrefix": "VirtualNetwork",
@@ -1082,7 +1082,7 @@
                   {
                     "name": "AllowMonitoring",
                     "properties": {
-                      "priority": 20,
+                      "priority": 120,
                       "access": "Allow",
                       "description": "Allow ICMP from Monitoring Subnet",
                       "destinationAddressPrefix": "VirtualNetwork",
@@ -1096,7 +1096,7 @@
                   {
                     "name": "AllowInternalWeb",
                     "properties": {
-                      "priority": 30,
+                      "priority": 130,
                       "access": "Allow",
                       "description": "Allow Web Traffic from \"VirtualNetwork\"",
                       "destinationApplicationSecurityGroups": [
@@ -1114,7 +1114,7 @@
                   {
                     "name": "AllowInternalAdTcp",
                     "properties": {
-                      "priority": 40,
+                      "priority": 140,
                       "access": "Allow",
                       "description": "Allow AD Traffic from \"VirtualNetwork\"",
                       "destinationApplicationSecurityGroups": [
@@ -1132,7 +1132,7 @@
                   {
                     "name": "AllowInternalAdUdp",
                     "properties": {
-                      "priority": 50,
+                      "priority": 150,
                       "access": "Allow",
                       "description": "Allow AD Traffic from \"VirtualNetwork\"",
                       "destinationApplicationSecurityGroups": [
@@ -1150,7 +1150,7 @@
                   {
                     "name": "AllowApplicationServerTcp",
                     "properties": {
-                      "priority": 60,
+                      "priority": 160,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Application Server Logic TCP Traffic",
@@ -1217,7 +1217,7 @@
                   {
                     "name": "AllowApplicationServerUdp",
                     "properties": {
-                      "priority": 70,
+                      "priority": 170,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Application Server Logic UDP Traffic",
@@ -1284,7 +1284,7 @@
                   {
                     "name": "AllowBuildServerTcp",
                     "properties": {
-                      "priority": 80,
+                      "priority": 180,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Build Server TCP Traffic",
@@ -1351,7 +1351,7 @@
                   {
                     "name": "AllowBuildServerUdp",
                     "properties": {
-                      "priority": 90,
+                      "priority": 190,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Build Server Logic UDP Traffic",
@@ -1418,7 +1418,7 @@
                   {
                     "name": "AllowCachingServerTcp",
                     "properties": {
-                      "priority": 100,
+                      "priority": 1100,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Caching Server Logic TCP Traffic",
@@ -1485,7 +1485,7 @@
                   {
                     "name": "AllowCachingServerUdp",
                     "properties": {
-                      "priority": 110,
+                      "priority": 1110,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Caching Server Logic UDP Traffic",
@@ -1552,7 +1552,7 @@
                   {
                     "name": "AllowDataWarehouseTcp",
                     "properties": {
-                      "priority": 120,
+                      "priority": 1120,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow DataWarehouse TCP Traffic",
@@ -1619,7 +1619,7 @@
                   {
                     "name": "AllowDataWarehouseUdp",
                     "properties": {
-                      "priority": 130,
+                      "priority": 1130,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow DataWarehouse UDP Traffic",
@@ -1686,7 +1686,7 @@
                   {
                     "name": "AllowDatabaseTcp",
                     "properties": {
-                      "priority": 140,
+                      "priority": 1140,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Database TCP Traffic",
@@ -1753,7 +1753,7 @@
                   {
                     "name": "AllowDatabaseUdp",
                     "properties": {
-                      "priority": 150,
+                      "priority": 1150,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Database UDP Traffic",
@@ -1820,7 +1820,7 @@
                   {
                     "name": "AllowDevelopmentServerTcp",
                     "properties": {
-                      "priority": 160,
+                      "priority": 1160,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Development Server TCP Traffic",
@@ -1887,7 +1887,7 @@
                   {
                     "name": "AllowDevelopmentServerUdp",
                     "properties": {
-                      "priority": 170,
+                      "priority": 1170,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Development Server UDP Traffic",
@@ -1954,7 +1954,7 @@
                   {
                     "name": "AllowDomainControllerServerTcp",
                     "properties": {
-                      "priority": 180,
+                      "priority": 1180,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow DataWarehouse TCP Traffic",
@@ -2021,7 +2021,7 @@
                   {
                     "name": "AllowDomainControllerServerUdp",
                     "properties": {
-                      "priority": 190,
+                      "priority": 1190,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow DomainControllerServer UDP Traffic",
@@ -2088,7 +2088,7 @@
                   {
                     "name": "AllowFtpFileServerTcp",
                     "properties": {
-                      "priority": 200,
+                      "priority": 1200,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow FTP TCP Traffic",
@@ -2155,7 +2155,7 @@
                   {
                     "name": "AllowFtpFileServerUdp",
                     "properties": {
-                      "priority": 210,
+                      "priority": 1210,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow ftpFileServer UDP Traffic",
@@ -2222,7 +2222,7 @@
                   {
                     "name": "AllowObjFileServerTcp",
                     "properties": {
-                      "priority": 220,
+                      "priority": 1220,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Object File Server TCP Traffic",
@@ -2289,7 +2289,7 @@
                   {
                     "name": "AllowObjFileServerUdp",
                     "properties": {
-                      "priority": 230,
+                      "priority": 1230,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow objFileServer UDP Traffic",
@@ -2356,7 +2356,7 @@
                   {
                     "name": "AllowScpFileServerTcp",
                     "properties": {
-                      "priority": 240,
+                      "priority": 1240,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow SCP (SSH, aka SFTP) File Server TCP Traffic",
@@ -2423,7 +2423,7 @@
                   {
                     "name": "AllowScpFileServerUdp",
                     "properties": {
-                      "priority": 250,
+                      "priority": 1250,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow SCP (SSH, aka SFTP) File Server UDP Traffic",
@@ -2490,7 +2490,7 @@
                   {
                     "name": "AllowSmbFileServerTcp",
                     "properties": {
-                      "priority": 260,
+                      "priority": 1260,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow SMB File Server TCP Traffic",
@@ -2557,7 +2557,7 @@
                   {
                     "name": "AllowSmbFileServerUdp",
                     "properties": {
-                      "priority": 270,
+                      "priority": 1270,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow SMB File Server UDP Traffic",
@@ -2624,7 +2624,7 @@
                   {
                     "name": "AllowJumpServerTcp",
                     "properties": {
-                      "priority": 280,
+                      "priority": 1280,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Jump Server TCP Traffic",
@@ -2691,7 +2691,7 @@
                   {
                     "name": "AllowJumpServerUdp",
                     "properties": {
-                      "priority": 290,
+                      "priority": 1290,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Jump Server UDP Traffic",
@@ -2758,7 +2758,7 @@
                   {
                     "name": "AllowLoggingServerTcp",
                     "properties": {
-                      "priority": 300,
+                      "priority": 1300,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Logging Server TCP Traffic",
@@ -2825,7 +2825,7 @@
                   {
                     "name": "AllowLoggingServerUdp",
                     "properties": {
-                      "priority": 310,
+                      "priority": 1310,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Logging Server UDP Traffic",
@@ -2892,7 +2892,7 @@
                   {
                     "name": "AllowPrintServerTcp",
                     "properties": {
-                      "priority": 320,
+                      "priority": 1320,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow print Server TCP Traffic",
@@ -2959,7 +2959,7 @@
                   {
                     "name": "AllowPrintServerUdp",
                     "properties": {
-                      "priority": 330,
+                      "priority": 1330,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Print Server UDP Traffic",
@@ -3026,7 +3026,7 @@
                   {
                     "name": "AllowProxyServerTcp",
                     "properties": {
-                      "priority": 340,
+                      "priority": 1340,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Proxy Server TCP Traffic",
@@ -3093,7 +3093,7 @@
                   {
                     "name": "AllowProxyServerUdp",
                     "properties": {
-                      "priority": 350,
+                      "priority": 1350,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Proxy Server UDP Traffic",
@@ -3160,7 +3160,7 @@
                   {
                     "name": "AllowWebServerTcp",
                     "properties": {
-                      "priority": 360,
+                      "priority": 1360,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Web Server TCP Traffic",
@@ -3227,7 +3227,7 @@
                   {
                     "name": "AllowWebServerUdp",
                     "properties": {
-                      "priority": 370,
+                      "priority": 1370,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Web Server UDP Traffic",
@@ -3308,7 +3308,7 @@
                   {
                     "name": "AllowVnet",
                     "properties": {
-                      "priority": 15,
+                      "priority": 115,
                       "access": "Allow",
                       "description": "Allow vnet to vnet",
                       "destinationAddressPrefix": "VirtualNetwork",
@@ -3322,7 +3322,7 @@
                   {
                     "name": "AllowInternet",
                     "properties": {
-                      "priority": 25,
+                      "priority": 125,
                       "access": "Allow",
                       "description": "Allow vnet to Internet (Still passes through Firewall)",
                       "destinationAddressPrefix": "Internet",
