@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "4330697406415139023"
+      "templateHash": "8464970365538586803"
     }
   },
   "parameters": {
@@ -446,7 +446,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "9731011622523566603"
+              "templateHash": "12983093203143899646"
             }
           },
           "parameters": {
@@ -473,6 +473,12 @@
             }
           },
           "resources": [
+            {
+              "type": "Microsoft.Network/applicationSecurityGroups",
+              "apiVersion": "2020-11-01",
+              "name": "[format('asg-{0}-main-{1}', parameters('applicationId'), parameters('environment'))]",
+              "location": "[parameters('location')]"
+            },
             {
               "type": "Microsoft.Network/applicationSecurityGroups",
               "apiVersion": "2020-11-01",
@@ -571,6 +577,10 @@
             }
           ],
           "outputs": {
+            "mainApplicationAsgId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-main-{1}', parameters('applicationId'), parameters('environment')))]"
+            },
             "applicationServerAsgId": {
               "type": "string",
               "value": "[resourceId('Microsoft.Network/applicationSecurityGroups', format('asg-{0}-app-{1}', parameters('applicationId'), parameters('environment')))]"
@@ -669,6 +679,9 @@
           },
           "tags": {
             "value": "[parameters('tags')]"
+          },
+          "mainApplicationAsgId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.mainApplicationAsgId.value]"
           },
           "applicationServerAsgId": {
             "value": "[reference(resourceId('Microsoft.Resources/deployments', format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))), '2022-09-01').outputs.applicationServerAsgId.value]"
@@ -822,7 +835,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "4975514995999999810"
+              "templateHash": "6496196085912788407"
             }
           },
           "parameters": {
@@ -874,6 +887,9 @@
               "metadata": {
                 "description": "Set of tags to apply to all resources."
               }
+            },
+            "mainApplicationAsgId": {
+              "type": "string"
             },
             "applicationServerAsgId": {
               "type": "string"
@@ -1163,52 +1179,7 @@
                       "destinationPortRanges": "[parameters('applicationServerDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -1230,52 +1201,7 @@
                       "destinationPortRanges": "[parameters('applicationServerDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -1297,52 +1223,7 @@
                       "destinationPortRanges": "[parameters('buildServerDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -1364,52 +1245,7 @@
                       "destinationPortRanges": "[parameters('buildServerDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -1431,52 +1267,7 @@
                       "destinationPortRanges": "[parameters('cachingServerDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -1498,52 +1289,7 @@
                       "destinationPortRanges": "[parameters('cachingServerDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -1565,52 +1311,7 @@
                       "destinationPortRanges": "[parameters('dataWarehouseDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -1632,52 +1333,7 @@
                       "destinationPortRanges": "[parameters('dataWarehouseDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -1699,52 +1355,7 @@
                       "destinationPortRanges": "[parameters('databaseDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -1766,52 +1377,7 @@
                       "destinationPortRanges": "[parameters('databaseDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -1833,52 +1399,7 @@
                       "destinationPortRanges": "[parameters('developmentServerDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -1900,52 +1421,7 @@
                       "destinationPortRanges": "[parameters('developmentServerDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -1967,52 +1443,7 @@
                       "destinationPortRanges": "[parameters('domainControllerServerDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -2034,52 +1465,7 @@
                       "destinationPortRanges": "[parameters('domainControllerServerDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -2101,52 +1487,7 @@
                       "destinationPortRanges": "[parameters('ftpFileServerDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -2168,52 +1509,7 @@
                       "destinationPortRanges": "[parameters('ftpFileServerDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -2235,52 +1531,7 @@
                       "destinationPortRanges": "[parameters('objFileServerDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -2302,52 +1553,7 @@
                       "destinationPortRanges": "[parameters('objFileServerDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -2369,52 +1575,7 @@
                       "destinationPortRanges": "[parameters('scpFileServerDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -2436,52 +1597,7 @@
                       "destinationPortRanges": "[parameters('scpFileServerDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -2503,52 +1619,7 @@
                       "destinationPortRanges": "[parameters('smbFileServerDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -2570,52 +1641,7 @@
                       "destinationPortRanges": "[parameters('smbFileServerDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -2637,52 +1663,7 @@
                       "destinationPortRanges": "[parameters('jumpServerDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -2704,52 +1685,7 @@
                       "destinationPortRanges": "[parameters('jumpServerDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -2771,52 +1707,7 @@
                       "destinationPortRanges": "[parameters('loggingServerDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -2838,52 +1729,7 @@
                       "destinationPortRanges": "[parameters('loggingServerDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -2905,52 +1751,7 @@
                       "destinationPortRanges": "[parameters('printServerDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -2972,52 +1773,7 @@
                       "destinationPortRanges": "[parameters('printServerDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -3039,52 +1795,7 @@
                       "destinationPortRanges": "[parameters('proxyServerDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -3106,52 +1817,7 @@
                       "destinationPortRanges": "[parameters('proxyServerDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -3173,52 +1839,7 @@
                       "destinationPortRanges": "[parameters('webServerDestinationTcpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
@@ -3240,52 +1861,7 @@
                       "destinationPortRanges": "[parameters('webServerDestinationUdpPorts')]",
                       "sourceApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('applicationServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('buildServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('cachingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('dataWarehouseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('databaseAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('developmentServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('ftpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('objFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('scpFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('smbFileServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('jumpServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('loggingServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('printServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('proxyServerAsgId')]"
-                        },
-                        {
-                          "id": "[parameters('webServerAsgId')]"
+                          "id": "[parameters('mainApplicationAsgId')]"
                         }
                       ],
                       "sourcePortRange": "*"
