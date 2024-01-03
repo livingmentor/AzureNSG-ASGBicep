@@ -4,7 +4,7 @@
 ## Overview
 This collection of Bicep files facilitates the setup and configuration of Azure Application Security Groups (ASGs) and Network Security Groups (NSGs) for a given application in Azure. The main file (`main.bicep`) integrates various components and should be used for deployment.  Additionally, a file named azuredeploy.json has been included that was created from the included bicep files that can be deployed with the following link.  
 
-[Deploy to Azure](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2Flivingmentor%2FAzureNSG-ASGBicep%2Fazuredeploy.json)
+[Deploy to Azure](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flivingmentor%2FAzureNSG-ASGBicep%2Fmain%2Fazuredeploy.json)
 
 The architecture of the NSGs & ASGs created from this collection assumes one NSG per subnet, and one subnet per application.  The intention is to create a baseline layer 4 security configuration that only allows intra-application communication.  However, the script also assumes some front end components to be reachable from all internal networks.  For example, webservers allow 443 from the "VirtualNetwork" tag. Active Directory Servers allow the set ports to be allowed from  the "VirtualNetwork" tag as well.  Additional inter-subnet or external access will require further configuration.  
 
@@ -53,7 +53,7 @@ This collection is currently untested.  Use at your own risk.
 
 OR*
 
-1. [Deploy to Azure](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2Flivingmentor%2FAzureNSG-ASGBicep%2Fazuredeploy.json)
+1. [Deploy to Azure](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flivingmentor%2FAzureNSG-ASGBicep%2Fmain%2Fazuredeploy.json)
 2. Update the fields within the template
 3. Deploy the template
 
