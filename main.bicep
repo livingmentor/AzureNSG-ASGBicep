@@ -212,7 +212,7 @@ module setNsgByApplication 'modules/nsg.bicep' = {
 }
 
 module setSubnetWithNsg 'modules/assignNsgToSubnet.bicep' = {
-  name: 'asg-${applicationName}-${environment}-deployment'
+  name: 'subnetNsgAssignment-${applicationName}-${environment}-deployment'
   params: {
     nsgId: setNsgByApplication.outputs.nsgId
     vnetName: (overrideVnet) ? overrideVnetName : vnetName

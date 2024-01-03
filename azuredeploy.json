@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "4227146251620137350"
+      "templateHash": "10533321152836664818"
     }
   },
   "parameters": {
@@ -3366,7 +3366,7 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
-      "name": "[format('asg-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))]",
+      "name": "[format('subnetNsgAssignment-{0}-{1}-deployment', parameters('applicationName'), parameters('environment'))]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
