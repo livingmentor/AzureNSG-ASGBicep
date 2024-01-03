@@ -90,7 +90,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowBastion'
         properties: {
-          priority: 10
+          priority: 110
           access: 'Allow'
           description: 'Allow management traffic (RDP/SSH) from bastion host subnet'
           destinationAddressPrefix: 'VirtualNetwork'
@@ -106,7 +106,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowMonitoring'
         properties: {
-          priority: 20
+          priority: 120
           access: 'Allow'
           description: 'Allow ICMP from Monitoring Subnet'
           destinationAddressPrefix: 'VirtualNetwork'
@@ -120,7 +120,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowInternalWeb'
         properties: {
-          priority: 30
+          priority: 130
           access: 'Allow'
           description: 'Allow Web Traffic from "VirtualNetwork"'
           destinationApplicationSecurityGroups: [
@@ -136,7 +136,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowInternalAdTcp'
         properties: {
-          priority: 40
+          priority: 140
           access: 'Allow'
           description: 'Allow AD Traffic from "VirtualNetwork"'
           destinationApplicationSecurityGroups: [
@@ -152,7 +152,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
       name: 'AllowInternalAdUdp'
       properties: {
-        priority: 50
+        priority: 150
         access: 'Allow'
         description: 'Allow AD Traffic from "VirtualNetwork"'
         destinationApplicationSecurityGroups: [
@@ -168,7 +168,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowApplicationServerTcp'
         properties: {
-          priority: 60
+          priority: 160
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Application Server Logic TCP Traffic'
@@ -201,7 +201,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowApplicationServerUdp'
         properties: {
-          priority: 70
+          priority: 170
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Application Server Logic UDP Traffic'
@@ -234,7 +234,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowBuildServerTcp'
         properties: {
-          priority: 80
+          priority: 180
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Build Server TCP Traffic'
@@ -267,7 +267,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowBuildServerUdp'
         properties: {
-          priority: 90
+          priority: 190
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Build Server Logic UDP Traffic'
@@ -300,7 +300,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowCachingServerTcp'
         properties: {
-          priority: 100
+          priority: 1100
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Caching Server Logic TCP Traffic'
@@ -333,7 +333,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowCachingServerUdp'
         properties: {
-          priority: 110
+          priority: 1110
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Caching Server Logic UDP Traffic'
@@ -366,7 +366,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowDataWarehouseTcp'
         properties: {
-          priority: 120
+          priority: 1120
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow DataWarehouse TCP Traffic'
@@ -399,7 +399,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowDataWarehouseUdp'
         properties: {
-          priority: 130
+          priority: 1130
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow DataWarehouse UDP Traffic'
@@ -432,7 +432,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowDatabaseTcp'
         properties: {
-          priority: 140
+          priority: 1140
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Database TCP Traffic'
@@ -465,7 +465,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowDatabaseUdp'
         properties: {
-          priority: 150
+          priority: 1150
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Database UDP Traffic'
@@ -498,7 +498,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowDevelopmentServerTcp'
         properties: {
-          priority: 160
+          priority: 1160
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Development Server TCP Traffic'
@@ -531,7 +531,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowDevelopmentServerUdp'
         properties: {
-          priority: 170
+          priority: 1170
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Development Server UDP Traffic'
@@ -564,7 +564,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowDomainControllerServerTcp'
         properties: {
-          priority: 180
+          priority: 1180
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow DataWarehouse TCP Traffic'
@@ -597,7 +597,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowDomainControllerServerUdp'
         properties: {
-          priority: 190
+          priority: 1190
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow DomainControllerServer UDP Traffic'
@@ -630,7 +630,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowFtpFileServerTcp'
         properties: {
-          priority: 200
+          priority: 1200
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow FTP TCP Traffic'
@@ -663,7 +663,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowFtpFileServerUdp'
         properties: {
-          priority: 210
+          priority: 1210
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow ftpFileServer UDP Traffic'
@@ -696,7 +696,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowObjFileServerTcp'
         properties: {
-          priority: 220
+          priority: 1220
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Object File Server TCP Traffic'
@@ -729,7 +729,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowObjFileServerUdp'
         properties: {
-          priority: 230
+          priority: 1230
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow objFileServer UDP Traffic'
@@ -762,7 +762,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowScpFileServerTcp'
         properties: {
-          priority: 240
+          priority: 1240
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow SCP (SSH, aka SFTP) File Server TCP Traffic'
@@ -795,7 +795,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowScpFileServerUdp'
         properties: {
-          priority: 250
+          priority: 1250
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow SCP (SSH, aka SFTP) File Server UDP Traffic'
@@ -828,7 +828,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowSmbFileServerTcp'
         properties: {
-          priority: 260
+          priority: 1260
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow SMB File Server TCP Traffic'
@@ -861,7 +861,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowSmbFileServerUdp'
         properties: {
-          priority: 270
+          priority: 1270
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow SMB File Server UDP Traffic'
@@ -894,7 +894,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowJumpServerTcp'
         properties: {
-          priority: 280
+          priority: 1280
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Jump Server TCP Traffic'
@@ -927,7 +927,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowJumpServerUdp'
         properties: {
-          priority: 290
+          priority: 1290
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Jump Server UDP Traffic'
@@ -960,7 +960,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowLoggingServerTcp'
         properties: {
-          priority: 300
+          priority: 1300
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Logging Server TCP Traffic'
@@ -993,7 +993,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowLoggingServerUdp'
         properties: {
-          priority: 310
+          priority: 1310
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Logging Server UDP Traffic'
@@ -1026,7 +1026,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowPrintServerTcp'
         properties: {
-          priority: 320
+          priority: 1320
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow print Server TCP Traffic'
@@ -1059,7 +1059,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowPrintServerUdp'
         properties: {
-          priority: 330
+          priority: 1330
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Print Server UDP Traffic'
@@ -1092,7 +1092,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowProxyServerTcp'
         properties: {
-          priority: 340
+          priority: 1340
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Proxy Server TCP Traffic'
@@ -1125,7 +1125,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowProxyServerUdp'
         properties: {
-          priority: 350
+          priority: 1350
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Proxy Server UDP Traffic'
@@ -1158,7 +1158,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowWebServerTcp'
         properties: {
-          priority: 360
+          priority: 1360
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Web Server TCP Traffic'
@@ -1191,7 +1191,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowWebServerUdp'
         properties: {
-          priority: 370
+          priority: 1370
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Web Server UDP Traffic'
@@ -1238,7 +1238,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowVnet'
         properties: {
-          priority: 15
+          priority: 115
           access: 'Allow'
           description: 'Allow vnet to vnet'
           destinationAddressPrefix: 'VirtualNetwork'
@@ -1252,7 +1252,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowInternet'
         properties: {
-          priority: 25
+          priority: 125
           access: 'Allow'
           description: 'Allow vnet to Internet (Still passes through Firewall)'
           destinationAddressPrefix: 'Internet'
