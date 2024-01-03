@@ -10,9 +10,10 @@ resource vnet 'Microsoft.Network/virtualNetworks@2023-04-01' existing = {
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' existing = {
   parent: vnet
   name: subnetName
-  properties: {
-    networkSecurityGroup: {
-      id: nsgId
-    }
-  }
+}
+
+resource assignNsg 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' = {
+  parent: vnet
+  name: subnetName
+  properties: union(subnet.properties, { networkSecurityGroup: { id: nsgId } })
 }

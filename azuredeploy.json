@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "11769273296708076713"
+      "templateHash": "16576038664726223004"
     }
   },
   "parameters": {
@@ -1985,7 +1985,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "8017700254118872183"
+              "templateHash": "9733256453956328807"
             }
           },
           "parameters": {
@@ -2004,11 +2004,7 @@
               "type": "Microsoft.Network/virtualNetworks/subnets",
               "apiVersion": "2023-04-01",
               "name": "[format('{0}/{1}', parameters('vnetName'), parameters('subnetName'))]",
-              "properties": {
-                "networkSecurityGroup": {
-                  "id": "[parameters('nsgId')]"
-                }
-              }
+              "properties": "[union(reference(resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName')), '2023-04-01'), createObject('networkSecurityGroup', createObject('id', parameters('nsgId'))))]"
             }
           ]
         }
