@@ -1,0 +1,19 @@
+# The following are allowed serverType values (case sensitive):
+# application
+# build
+# cache
+# datawarehouse
+# database
+# development
+# domaincontroller 
+# ftp 
+# obj 
+# scp 
+# smb 
+# jump 
+# logging 
+# print
+# proxy 
+# web
+serverName,serverType
+EXAMPLEWEB01,web

@@ -1,0 +1,6 @@
+# Replace this file with the dependency map export from Azure Migrate.
+# If future updates to Azure migrate change the schema of this file, the
+# below is what the python code is expecting
+Source server name,Source IP,Source application,Source process,Destination server name,Destination IP,Destination application,Destination process,Destination port
+test.source,10.1.1.1,test.exe,test,EXAMPLEWEB01,10.2.2.2,test.exe,test,80
+test.source,10.1.1.1,test.exe,test,EXAMPLEWEB01,10.2.2.2,test.exe,test,443
