@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-@author: livin
+@author: livingmentor
 """
 import argparse
 import pandas as pd
@@ -69,6 +69,8 @@ typeMap = {
 }
 
 parameters = {}
+#We don't want RDP or WinRM to be allowed from anywhere other than the management/bastion networks.
+knownExcludedPorts = [3389, 5985]
 
 # Parse the Map
 for k, v in typeMap.items():
@@ -87,6 +89,8 @@ for k, v in typeMap.items():
     
     # Takes the discovered ports and determines if they should be TCP, UDP, or both.
     for port in portList:
+        if port in knownExcludedPorts:
+            continue
         isTcp = IsKnownPort(port, "tcp")
         isUdp = IsKnownPort(port, "udp")
         if (isTcp and isUdp) or (not isTcp and not isUdp):
@@ -101,6 +105,7 @@ for k, v in typeMap.items():
     if len(udpPortList) > 0:
         parameters[v + "UdpPorts"] = {'value': udpPortList}
 
+# Takes what we've done and outputs it as a json file to be used in conjunction with the bicep or ARM template.
 jsonData['parameters'] = parameters
 with open(args.outfile, 'w') as file:
     json.dump(jsonData, file, indent=4)
