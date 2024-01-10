@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "16576038664726223004"
+      "templateHash": "6336356913679325052"
     }
   },
   "parameters": {
@@ -858,7 +858,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "6496196085912788407"
+              "templateHash": "2168625786015387283"
             }
           },
           "parameters": {
@@ -892,14 +892,14 @@
             },
             "bastionSubnet": {
               "type": "string",
-              "defaultValue": "10.x.y.0/24",
+              "defaultValue": "10.16.11.192/26",
               "metadata": {
                 "description": "Azure Bastion Subnet CIDR"
               }
             },
             "monitoringSubnet": {
               "type": "string",
-              "defaultValue": "10.x.y.0/24",
+              "defaultValue": "10.16.3.0/26",
               "metadata": {
                 "description": "Monitoring Subnet CIDR"
               }
@@ -1119,6 +1119,24 @@
                     }
                   },
                   {
+                    "name": "AllowMGMT",
+                    "properties": {
+                      "priority": 112,
+                      "access": "Allow",
+                      "description": "Allow management traffic (RDP/SSH) from designated management subnet(s)",
+                      "destinationAddressPrefix": "VirtualNetwork",
+                      "destinationPortRanges": [
+                        "3389",
+                        "22",
+                        "5985"
+                      ],
+                      "direction": "Inbound",
+                      "protocol": "Tcp",
+                      "sourceAddressPrefix": "VirtualNetwork",
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
                     "name": "AllowMonitoring",
                     "properties": {
                       "priority": 120,
@@ -1200,11 +1218,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('applicationServerDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1222,11 +1236,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('applicationServerDestinationUdpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1244,11 +1254,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('buildServerDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1266,11 +1272,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('buildServerDestinationUdpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1288,11 +1290,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('cachingServerDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1310,11 +1308,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('cachingServerDestinationUdpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1332,11 +1326,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('dataWarehouseDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1354,11 +1344,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('dataWarehouseDestinationUdpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1376,11 +1362,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('databaseDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1398,11 +1380,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('databaseDestinationUdpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1420,11 +1398,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('developmentServerDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1442,11 +1416,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('developmentServerDestinationUdpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1456,7 +1426,7 @@
                       "priority": 1180,
                       "access": "Allow",
                       "direction": "Inbound",
-                      "description": "Allow DataWarehouse TCP Traffic",
+                      "description": "Allow DomainController TCP Traffic",
                       "protocol": "Tcp",
                       "destinationApplicationSecurityGroups": [
                         {
@@ -1464,11 +1434,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('domainControllerServerDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1486,11 +1452,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('domainControllerServerDestinationUdpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1508,11 +1470,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('ftpFileServerDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1530,11 +1488,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('ftpFileServerDestinationUdpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1552,11 +1506,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('objFileServerDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1574,11 +1524,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('objFileServerDestinationUdpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1596,11 +1542,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('scpFileServerDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1618,11 +1560,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('scpFileServerDestinationUdpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1640,11 +1578,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('smbFileServerDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1662,11 +1596,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('smbFileServerDestinationUdpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1684,11 +1614,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('jumpServerDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1706,11 +1632,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('jumpServerDestinationUdpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1728,11 +1650,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('loggingServerDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1750,11 +1668,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('loggingServerDestinationUdpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1772,11 +1686,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('printServerDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1794,11 +1704,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('printServerDestinationUdpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1816,11 +1722,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('proxyServerDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1838,11 +1740,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('proxyServerDestinationUdpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1860,11 +1758,7 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('webServerDestinationTcpPorts')]",
-                      "sourceApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('mainApplicationAsgId')]"
-                        }
-                      ],
+                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },
@@ -1882,6 +1776,24 @@
                         }
                       ],
                       "destinationPortRanges": "[parameters('webServerDestinationUdpPorts')]",
+                      "sourceAddressPrefix": "VirtualNetwork",
+                      "sourcePortRange": "*"
+                    }
+                  },
+                  {
+                    "name": "AllowInternalApplicationTraffic",
+                    "properties": {
+                      "priority": 1370,
+                      "access": "Allow",
+                      "direction": "Inbound",
+                      "description": "Allow Internal Application Traffic",
+                      "protocol": "Udp",
+                      "destinationApplicationSecurityGroups": [
+                        {
+                          "id": "[parameters('mainApplicationAsgId')]"
+                        }
+                      ],
+                      "destinationPortRange": "*",
                       "sourceApplicationSecurityGroups": [
                         {
                           "id": "[parameters('mainApplicationAsgId')]"
