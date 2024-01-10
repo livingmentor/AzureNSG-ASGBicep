@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "6328983044610363086"
+      "templateHash": "6669647670063743177"
     }
   },
   "parameters": {
@@ -858,7 +858,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "2336651862696669124"
+              "templateHash": "14158470663750639595"
             }
           },
           "parameters": {
@@ -1121,7 +1121,7 @@
                   {
                     "name": "AllowMGMT",
                     "properties": {
-                      "priority": 112,
+                      "priority": 120,
                       "access": "Allow",
                       "description": "Allow management traffic (RDP/SSH) from designated management subnet(s)",
                       "destinationAddressPrefix": "VirtualNetwork",
@@ -1139,7 +1139,7 @@
                   {
                     "name": "AllowMonitoring",
                     "properties": {
-                      "priority": 120,
+                      "priority": 130,
                       "access": "Allow",
                       "description": "Allow ICMP from Monitoring Subnet",
                       "destinationAddressPrefix": "VirtualNetwork",
@@ -1147,60 +1147,6 @@
                       "direction": "Inbound",
                       "protocol": "Icmp",
                       "sourceAddressPrefix": "[parameters('monitoringSubnet')]",
-                      "sourcePortRange": "*"
-                    }
-                  },
-                  {
-                    "name": "AllowInternalWeb",
-                    "properties": {
-                      "priority": 130,
-                      "access": "Allow",
-                      "description": "Allow Web Traffic from \"VirtualNetwork\"",
-                      "destinationApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('webServerAsgId')]"
-                        }
-                      ],
-                      "destinationPortRange": "443",
-                      "direction": "Inbound",
-                      "protocol": "Tcp",
-                      "sourceAddressPrefix": "VirtualNetwork",
-                      "sourcePortRange": "*"
-                    }
-                  },
-                  {
-                    "name": "AllowInternalAdTcp",
-                    "properties": {
-                      "priority": 140,
-                      "access": "Allow",
-                      "description": "Allow AD Traffic from \"VirtualNetwork\"",
-                      "destinationApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        }
-                      ],
-                      "destinationPortRanges": "[parameters('domainControllerServerDestinationTcpPorts')]",
-                      "direction": "Inbound",
-                      "protocol": "Tcp",
-                      "sourceAddressPrefix": "VirtualNetwork",
-                      "sourcePortRange": "*"
-                    }
-                  },
-                  {
-                    "name": "AllowInternalAdUdp",
-                    "properties": {
-                      "priority": 150,
-                      "access": "Allow",
-                      "description": "Allow AD Traffic from \"VirtualNetwork\"",
-                      "destinationApplicationSecurityGroups": [
-                        {
-                          "id": "[parameters('domainControllerServerAsgId')]"
-                        }
-                      ],
-                      "destinationPortRanges": "[parameters('domainControllerServerDestinationUdpPorts')]",
-                      "direction": "Inbound",
-                      "protocol": "Tcp",
-                      "sourceAddressPrefix": "VirtualNetwork",
                       "sourcePortRange": "*"
                     }
                   },

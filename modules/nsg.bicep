@@ -107,7 +107,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowMGMT'
         properties: {
-          priority: 112
+          priority: 120
           access: 'Allow'
           description: 'Allow management traffic (RDP/SSH) from designated management subnet(s)'
           destinationAddressPrefix: 'VirtualNetwork'
@@ -123,7 +123,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowMonitoring'
         properties: {
-          priority: 120
+          priority: 130
           access: 'Allow'
           description: 'Allow ICMP from Monitoring Subnet'
           destinationAddressPrefix: 'VirtualNetwork'
@@ -134,54 +134,6 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           sourcePortRange: '*'
         }
       }
-      {
-        name: 'AllowInternalWeb'
-        properties: {
-          priority: 130
-          access: 'Allow'
-          description: 'Allow Web Traffic from "VirtualNetwork"'
-          destinationApplicationSecurityGroups: [
-            { id: webServerAsgId }
-          ]
-          destinationPortRange: '443'
-          direction: 'Inbound'
-          protocol: 'Tcp'
-          sourceAddressPrefix: 'VirtualNetwork'
-          sourcePortRange: '*'
-        }
-      }
-      {
-        name: 'AllowInternalAdTcp'
-        properties: {
-          priority: 140
-          access: 'Allow'
-          description: 'Allow AD Traffic from "VirtualNetwork"'
-          destinationApplicationSecurityGroups: [
-            { id: domainControllerServerAsgId }
-          ]
-          destinationPortRanges: domainControllerServerDestinationTcpPorts
-          direction: 'Inbound'
-          protocol: 'Tcp'
-          sourceAddressPrefix: 'VirtualNetwork'
-          sourcePortRange: '*'
-        }
-      }
-      {
-      name: 'AllowInternalAdUdp'
-      properties: {
-        priority: 150
-        access: 'Allow'
-        description: 'Allow AD Traffic from "VirtualNetwork"'
-        destinationApplicationSecurityGroups: [
-          { id: domainControllerServerAsgId }
-        ]
-        destinationPortRanges: domainControllerServerDestinationUdpPorts
-        direction: 'Inbound'
-        protocol: 'Tcp'
-        sourceAddressPrefix: 'VirtualNetwork'
-        sourcePortRange: '*'
-      }
-    }
       {
         name: 'AllowApplicationServerTcp'
         properties: {
