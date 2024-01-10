@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "9816228434210865442"
+      "templateHash": "3397735858545211663"
     }
   },
   "parameters": {
@@ -858,7 +858,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "2168625786015387283"
+              "templateHash": "5902126771726392262"
             }
           },
           "parameters": {
@@ -1783,7 +1783,7 @@
                   {
                     "name": "AllowInternalApplicationTraffic",
                     "properties": {
-                      "priority": 1370,
+                      "priority": 1380,
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Internal Application Traffic",
