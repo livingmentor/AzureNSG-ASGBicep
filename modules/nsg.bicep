@@ -11,7 +11,7 @@ param environment string = 'dev'
 param regionName string = 'usc'
 
 @description('Azure Bastion Subnet CIDR')
-param bastionSubnet string = '10.x.y.0/24'
+param bastionSubnet string = '10.16.11.192/26'
 
 //Not needed?
 //@description('Application Subnet CIDR')
@@ -22,7 +22,7 @@ param bastionSubnet string = '10.x.y.0/24'
 //param activeDirectorySubnet string = '10.x.y.0/24'
 
 @description('Monitoring Subnet CIDR')
-param monitoringSubnet string = '10.x.y.0/24'
+param monitoringSubnet string = '10.16.3.0/26'
 
 @description('Set of tags to apply to all resources.')
 param tags object = {}
@@ -105,6 +105,22 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
         }
       }
       {
+        name: 'AllowMGMT'
+        properties: {
+          priority: 112
+          access: 'Allow'
+          description: 'Allow management traffic (RDP/SSH) from designated management subnet(s)'
+          destinationAddressPrefix: 'VirtualNetwork'
+          destinationPortRanges: [
+            '3389', '22', '5985'
+          ]
+          direction: 'Inbound'
+          protocol: 'Tcp'
+          sourceAddressPrefix: 'VirtualNetwork'
+          sourcePortRange: '*'
+        }
+      }
+      {
         name: 'AllowMonitoring'
         properties: {
           priority: 120
@@ -178,10 +194,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: applicationServerAsgId }
           ]
           destinationPortRanges: applicationServerDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -197,9 +210,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: applicationServerAsgId }
           ]
           destinationPortRanges: applicationServerDestinationUdpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -215,9 +226,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: buildServerAsgId }
           ]
           destinationPortRanges: buildServerDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -233,9 +242,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: buildServerAsgId }
           ]
           destinationPortRanges: buildServerDestinationUdpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -251,9 +258,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: cachingServerAsgId }
           ]
           destinationPortRanges: cachingServerDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -269,9 +274,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: cachingServerAsgId }
           ]
           destinationPortRanges: cachingServerDestinationUdpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -287,9 +290,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: dataWarehouseAsgId }
           ]
           destinationPortRanges: dataWarehouseDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -305,9 +306,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: dataWarehouseAsgId }
           ]
           destinationPortRanges: dataWarehouseDestinationUdpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -323,9 +322,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: dataWarehouseAsgId }
           ]
           destinationPortRanges: databaseDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -341,9 +338,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: databaseAsgId }
           ]
           destinationPortRanges: databaseDestinationUdpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -359,9 +354,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: developmentServerAsgId }
           ]
           destinationPortRanges: developmentServerDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -377,9 +370,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: developmentServerAsgId }
           ]
           destinationPortRanges: developmentServerDestinationUdpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -389,15 +380,13 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           priority: 1180
           access: 'Allow'
           direction: 'Inbound'
-          description: 'Allow DataWarehouse TCP Traffic'
+          description: 'Allow DomainController TCP Traffic'
           protocol: 'Tcp'
           destinationApplicationSecurityGroups: [
             { id: domainControllerServerAsgId }
           ]
           destinationPortRanges: domainControllerServerDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -413,9 +402,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: domainControllerServerAsgId }
           ]
           destinationPortRanges: domainControllerServerDestinationUdpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -431,9 +418,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: ftpFileServerAsgId }
           ]
           destinationPortRanges: ftpFileServerDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -449,9 +434,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: ftpFileServerAsgId }
           ]
           destinationPortRanges: ftpFileServerDestinationUdpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -467,9 +450,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: objFileServerAsgId }
           ]
           destinationPortRanges: objFileServerDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -485,9 +466,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: objFileServerAsgId }
           ]
           destinationPortRanges: objFileServerDestinationUdpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -503,9 +482,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: scpFileServerAsgId }
           ]
           destinationPortRanges: scpFileServerDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -521,9 +498,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: scpFileServerAsgId }
           ]
           destinationPortRanges: scpFileServerDestinationUdpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -539,9 +514,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: smbFileServerAsgId }
           ]
           destinationPortRanges: smbFileServerDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -557,9 +530,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: smbFileServerAsgId }
           ]
           destinationPortRanges: smbFileServerDestinationUdpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -575,9 +546,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: jumpServerAsgId }
           ]
           destinationPortRanges: jumpServerDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -593,9 +562,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: jumpServerAsgId }
           ]
           destinationPortRanges: jumpServerDestinationUdpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -611,9 +578,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: loggingServerAsgId }
           ]
           destinationPortRanges: loggingServerDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -629,9 +594,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: loggingServerAsgId }
           ]
           destinationPortRanges: loggingServerDestinationUdpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -647,9 +610,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: printServerAsgId }
           ]
           destinationPortRanges: printServerDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -665,9 +626,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: printServerAsgId }
           ]
           destinationPortRanges: printServerDestinationUdpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -683,9 +642,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: proxyServerAsgId }
           ]
           destinationPortRanges: proxyServerDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -701,9 +658,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: proxyServerAsgId }
           ]
           destinationPortRanges: proxyServerDestinationUdpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -719,9 +674,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: webServerAsgId }
           ]
           destinationPortRanges: webServerDestinationTcpPorts
-          sourceApplicationSecurityGroups: [
-            { id: mainApplicationAsgId }
-          ]
+          sourceAddressPrefix: 'VirtualNetwork'
           sourcePortRange: '*'
         }
       }
@@ -737,6 +690,22 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
             { id: webServerAsgId }
           ]
           destinationPortRanges: webServerDestinationUdpPorts
+          sourceAddressPrefix: 'VirtualNetwork'
+          sourcePortRange: '*'
+        }
+      }
+      {
+        name: 'AllowInternalApplicationTraffic'
+        properties: {
+          priority: 1370
+          access: 'Allow'
+          direction: 'Inbound'
+          description: 'Allow Internal Application Traffic'
+          protocol: 'Udp'
+          destinationApplicationSecurityGroups: [
+            { id: mainApplicationAsgId }
+          ]
+          destinationPortRange: '*'
           sourceApplicationSecurityGroups: [
             { id: mainApplicationAsgId }
           ]

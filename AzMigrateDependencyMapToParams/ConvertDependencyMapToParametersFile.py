@@ -94,12 +94,12 @@ for k, v in typeMap.items():
         isTcp = IsKnownPort(port, "tcp")
         isUdp = IsKnownPort(port, "udp")
         if (isTcp and isUdp) or (not isTcp and not isUdp):
-            tcpPortList.append(port)
-            udpPortList.append(port)
+            tcpPortList.append(str(port))
+            udpPortList.append(str(port))
         elif isTcp and not isUdp:
-            tcpPortList.append(port)
+            tcpPortList.append(str(port))
         elif not isTcp and isUdp:
-            udpPortList.append(port)
+            udpPortList.append(str(port))
     if len(tcpPortList) > 0:
         parameters[v + "TcpPorts"] = {'value': tcpPortList}
     if len(udpPortList) > 0:
