@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "6336356913679325052"
+      "templateHash": "9816228434210865442"
     }
   },
   "parameters": {
@@ -53,14 +53,14 @@
     },
     "bastionSubnet": {
       "type": "string",
-      "defaultValue": "10.x.y.0/24",
+      "defaultValue": "10.16.11.192/26",
       "metadata": {
         "description": "Azure Bastion Subnet CIDR"
       }
     },
     "monitoringSubnet": {
       "type": "string",
-      "defaultValue": "10.x.y.0/24",
+      "defaultValue": "10.16.3.0/26",
       "metadata": {
         "description": "Monitoring Subnet CIDR"
       }

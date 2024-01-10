@@ -21,14 +21,14 @@ param applicationCode string = 'MYAP'
 param environment string = 'dev'
 
 @description('Azure Bastion Subnet CIDR')
-param bastionSubnet string = '10.x.y.0/24'
+param bastionSubnet string = '10.16.11.192/26'
 
 //Not Needed?
 //@description('Active Directory Subnet CIDR')
 //param activeDirectorySubnet string = '10.x.y.0/24'
 
 @description('Monitoring Subnet CIDR')
-param monitoringSubnet string = '10.x.y.0/24'
+param monitoringSubnet string = '10.16.3.0/26'
 
 @description('Application Server Destination TCP Ports')
 param applicationServerDestinationTcpPorts array = ['1024-49151']
