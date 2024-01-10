@@ -319,7 +319,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           description: 'Allow Database TCP Traffic'
           protocol: 'Tcp'
           destinationApplicationSecurityGroups: [
-            { id: dataWarehouseAsgId }
+            { id: databaseAsgId }
           ]
           destinationPortRanges: databaseDestinationTcpPorts
           sourceAddressPrefix: 'VirtualNetwork'
@@ -697,7 +697,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
       {
         name: 'AllowInternalApplicationTraffic'
         properties: {
-          priority: 1370
+          priority: 1380
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Internal Application Traffic'

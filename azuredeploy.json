@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "3397735858545211663"
+      "templateHash": "6328983044610363086"
     }
   },
   "parameters": {
@@ -858,7 +858,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "5902126771726392262"
+              "templateHash": "2336651862696669124"
             }
           },
           "parameters": {
@@ -1358,7 +1358,7 @@
                       "protocol": "Tcp",
                       "destinationApplicationSecurityGroups": [
                         {
-                          "id": "[parameters('dataWarehouseAsgId')]"
+                          "id": "[parameters('databaseAsgId')]"
                         }
                       ],
                       "destinationPortRanges": "[parameters('databaseDestinationTcpPorts')]",
