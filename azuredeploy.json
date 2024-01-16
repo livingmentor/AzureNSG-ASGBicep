@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.24.24.22086",
-      "templateHash": "6669647670063743177"
+      "templateHash": "8164637110056868913"
     }
   },
   "parameters": {
@@ -858,7 +858,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.24.24.22086",
-              "templateHash": "14158470663750639595"
+              "templateHash": "17330349899910769283"
             }
           },
           "parameters": {
@@ -1733,7 +1733,7 @@
                       "access": "Allow",
                       "direction": "Inbound",
                       "description": "Allow Internal Application Traffic",
-                      "protocol": "Udp",
+                      "protocol": "Any",
                       "destinationApplicationSecurityGroups": [
                         {
                           "id": "[parameters('mainApplicationAsgId')]"

@@ -86,7 +86,10 @@ for k, v in typeMap.items():
         filteredFrame = dependencyMapDataFrame[dependencyMapDataFrame['Destination server name'] == server]
         ports = filteredFrame['Destination port'].unique()
         portList.extend(ports.tolist())
-    
+
+    portSet = set(portList)
+    portList = list(portSet)
+    print(portList)
     # Takes the discovered ports and determines if they should be TCP, UDP, or both.
     for port in portList:
         if port in knownExcludedPorts:
@@ -105,6 +108,8 @@ for k, v in typeMap.items():
     if len(udpPortList) > 0:
         parameters[v + "UdpPorts"] = {'value': udpPortList}
 
+
+print(parameters)
 # Takes what we've done and outputs it as a json file to be used in conjunction with the bicep or ARM template.
 jsonData['parameters'] = parameters
 with open(args.outfile, 'w') as file:
