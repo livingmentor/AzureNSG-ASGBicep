@@ -87,9 +87,10 @@ for k, v in typeMap.items():
         ports = filteredFrame['Destination port'].unique()
         portList.extend(ports.tolist())
 
+    #Remove duplicates
     portSet = set(portList)
     portList = list(portSet)
-    print(portList)
+    
     # Takes the discovered ports and determines if they should be TCP, UDP, or both.
     for port in portList:
         if port in knownExcludedPorts:
