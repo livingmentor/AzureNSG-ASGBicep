@@ -653,7 +653,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
           access: 'Allow'
           direction: 'Inbound'
           description: 'Allow Internal Application Traffic'
-          protocol: 'Any'
+          protocol: '*'
           destinationApplicationSecurityGroups: [
             { id: mainApplicationAsgId }
           ]
